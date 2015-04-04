@@ -1,14 +1,28 @@
-# Site settings
-title: Your awesome title
-email: your-email@domain.com
-description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+# Permalinks
+permalink:        "/blog/:title"
+relative_permalinks: true
 
-# Build settings
-markdown: kramdown
+# Setup
+title:            Burger
+tagline:
+url:              "http://mblode.github.io/burger"
+baseurl:          "/burger/"
+paginate:         3
+author:
+  name:           Matthew Blode
+  url:            https://twitter.com/mblode
+  email:          m.blode@gmail.com
+
+# Custom vars
+version:          1.1.0
+github:
+  repo:           https://github.com/mblode/mblode.github.io
+
+highlighter: pygments
+safe: true
+lsi: false
+
+sass:
+  style: :compressed
+
+exclude: ["node_modules", "gulpfile.js", "package.json", "bower-components", "bower.json"]
