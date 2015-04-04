@@ -48,25 +48,25 @@ These are the files that are generated from `bower install burger`
 ## Documentation
 ### HTML Markup
 ```
-<!-- Navigation -->
-<div class="burger-nav">
-  <li><a class="burger-active" href="#">Home</a></li>
-  <li><a href="#">About</a></li>
-  <li><a href="#">Portfolio</a></li>
-  <li><a href="#">Contact</a></li>
-</div>
-
-<!-- Burger-Icon -->
-<a href="#" class="burger-contain">
-  <div class="burger">
-    <div class="bun bun-top"></div>
-    <div class="bun bun-mid"></div>
-    <div class="bun bun-bottom"></div>
+  <!-- Navigation -->
+  <div class="burger-nav">
+    <li><a class="burger-link active" href="#">Home</a></li>
+    <li><a class="burger-link" href="#">About</a></li>
+    <li><a class="burger-link" href="#">Portfolio</a></li>
+    <li><a class="burger-link" href="#">Contact</a></li>
   </div>
-</a>
 
-<!-- Burger-Brand -->
-<a href="#" class="burger-brand">Burger</a>
+  <!-- Burger-Icon -->
+  <div class="burger-contain">
+    <div class="burger">
+      <div class="bun bun-top"></div>
+      <div class="bun bun-mid"></div>
+      <div class="bun bun-bottom"></div>
+    </div>
+
+    <!-- Burger-Brand -->
+    <a href="#" class="burger-brand">Burger</a>
+  </div>
 ```
 
 ## Contributing to Burger
