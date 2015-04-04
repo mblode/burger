@@ -1,0 +1,48 @@
+{
+  "name": "burger",
+  "version": "1.1.1",
+  "homepage": "https://github.com/mblode/burger",
+  "authors": [
+    "mblode <m.blode@gmail.com>"
+  ],
+  "keywords": [
+    "burger",
+    "menu",
+    "hamburger",
+    "css",
+    "jquery",
+    "javascript",
+    "navigation",
+    "fullscreen"
+  ],
+  "main": [
+    "dist/css/burger.min.css",
+    "dist/css/burger.css",
+    "dist/scripts/burger.min.js",
+    "dist/index.html"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "app",
+    "gulpfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3"
+  },
+  "_release": "1.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.1",
+    "commit": "80c5ac978644107ca06ff0041e12b30976dfab89"
+  },
+  "_source": "git://github.com/mblode/burger.git",
+  "_target": "~1.1.1",
+  "_originalSource": "burger",
+  "_direct": true
+}
