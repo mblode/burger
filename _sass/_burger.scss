@@ -132,18 +132,4 @@
       margin-top: $b-txt-pad-top;
     }
   }
-
-  li:not(.open) {
-    animation-duration: 3s;
-    animation-fill-mode: both;
-    animation-name: slideOutLeft;
-  }
-
-  &.open {
-    li {
-      animation-duration: 1s;
-      animation-fill-mode: both;
-      animation-name: slideInLeft;
-    }
-  }
 }

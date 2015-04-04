@@ -1,7 +1,7 @@
 @-webkit-keyframes slideInLeft {
   0% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-            transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-300px, 0, 0);
+            transform: translate3d(-300px, 0, 0);
     visibility: visible; }
 
   100% {
@@ -10,8 +10,8 @@
 
 @keyframes slideInLeft {
   0% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-            transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-300px, 0, 0);
+            transform: translate3d(-300px, 0, 0);
     visibility: visible; }
 
   100% {
@@ -24,8 +24,8 @@
             transform: translate3d(0, 0, 0); }
 
   100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-            transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-300px, 0, 0);
+            transform: translate3d(-300px, 0, 0);
     visibility: hidden; } }
 
 @keyframes slideOutLeft {
@@ -34,8 +34,8 @@
             transform: translate3d(0, 0, 0); }
 
   100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-            transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-300px, 0, 0);
+            transform: translate3d(-300px, 0, 0);
     visibility: hidden; } }
 
 * {
@@ -57,15 +57,15 @@
     padding-left: 16px;
     padding-top: 18px;
     position: relative;
-    -webkit-transition: 0.6s;
-            transition: 0.6s;
+    -webkit-transition: all .4s ease;
+            transition: all .4s ease;
     width: 60px;
     z-index: 999; }
   .burger-contain .bun {
     background: #fff;
     position: relative;
-    -webkit-transition: 0.6s;
-            transition: 0.6s; }
+    -webkit-transition: all .4s ease;
+            transition: all .4s ease; }
   .burger-contain .bun-top {
     height: 2px;
     top: 0;
@@ -88,8 +88,8 @@
     position: relative;
     text-decoration: none;
     top: -21.42857px;
-    -webkit-transition: 0.6s;
-            transition: 0.6s;
+    -webkit-transition: all .4s ease;
+            transition: all .4s ease;
     z-index: 2000; }
   .burger-contain:hover:not(.open) .burger {
     background: #0689b1; }
@@ -136,25 +136,11 @@
       font-weight: 300;
       margin-left: 30px;
       text-decoration: none;
-      -webkit-transition: 0.6s;
-              transition: 0.6s;
+      -webkit-transition: all .4s ease;
+              transition: all .4s ease;
       width: auto; }
     .burger-nav li .burger-link:hover, .burger-nav li .burger-link.active {
       border-left: #fff solid 2px;
       padding-left: 30px; }
     .burger-nav li:first-child {
       margin-top: 120px; }
-  .burger-nav li:not(.open) {
-    -webkit-animation-duration: 3s;
-            animation-duration: 3s;
-    -webkit-animation-fill-mode: both;
-            animation-fill-mode: both;
-    -webkit-animation-name: slideOutLeft;
-            animation-name: slideOutLeft; }
-  .burger-nav.open li {
-    -webkit-animation-duration: 1s;
-            animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-            animation-fill-mode: both;
-    -webkit-animation-name: slideInLeft;
-            animation-name: slideInLeft; }
