@@ -1,8 +1,6 @@
 # Burger
 Burger is a minimal hamburger menu with fullscreen navigation. It is created by mblode.
 
-It requires [jQuery](https://jquery.com/) as a dependency.
-
 ## Burger in action
 ![Burger Gif](http://i.imgur.com/spSuHHZ.gif)
 
