@@ -6,7 +6,7 @@ It requires [jQuery](https://jquery.com/) as a dependency.
 ## Burger in action
 ![Burger Gif](http://i.imgur.com/spSuHHZ.gif)
 
-## [Demo on Codepen](http://codepen.io/mblode/pen/pvBYpB)
+## [Demo on Codepen](http://codepen.io/mblode/pen/qEGWwB)
 
 ## Quick Start
 Several quick start options are available:
@@ -36,9 +36,13 @@ These are the files that are generated from `bower install burger`
     │   ├── burger.css
     │   └── burger.min.css
     ├── index.html
-    └── scripts
-        ├── burger.js
-        └── burger.min.js
+    ├── scripts
+    │   ├── burger.js
+    │   └── burger.min.js
+    └── scss
+        ├── _burger.scss
+        ├── _config.scss
+        └── burger.scss
 ```
 
 ## Documentation
