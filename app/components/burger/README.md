@@ -6,7 +6,7 @@ It requires [jQuery](https://jquery.com/) as a dependency.
 ## Burger in action
 ![Burger Gif](http://i.imgur.com/spSuHHZ.gif)
 
-## [Demo on Codepen](http://codepen.io/mblode/pen/pvBYpB)
+## [Demo on Codepen](http://codepen.io/mblode/pen/qEGWwB)
 
 ## Quick Start
 Several quick start options are available:
@@ -36,33 +36,37 @@ These are the files that are generated from `bower install burger`
     │   ├── burger.css
     │   └── burger.min.css
     ├── index.html
-    └── scripts
-        ├── burger.js
-        └── burger.min.js
+    ├── scripts
+    │   ├── burger.js
+    │   └── burger.min.js
+    └── scss
+        ├── _burger.scss
+        ├── _config.scss
+        └── burger.scss
 ```
 
 ## Documentation
 ### HTML Markup
 ```
-<!-- Navigation -->
-<div class="burger-nav">
-  <li><a class="burger-active" href="#">Home</a></li>
-  <li><a href="#">About</a></li>
-  <li><a href="#">Portfolio</a></li>
-  <li><a href="#">Contact</a></li>
-</div>
-
-<!-- Burger-Icon -->
-<a href="#" class="burger-contain">
-  <div class="burger">
-    <div class="bun bun-top"></div>
-    <div class="bun bun-mid"></div>
-    <div class="bun bun-bottom"></div>
+  <!-- Navigation -->
+  <div class="burger-nav">
+    <li><a class="burger-link active" href="#">Home</a></li>
+    <li><a class="burger-link" href="#">About</a></li>
+    <li><a class="burger-link" href="#">Portfolio</a></li>
+    <li><a class="burger-link" href="#">Contact</a></li>
   </div>
-</a>
 
-<!-- Burger-Brand -->
-<a href="#" class="burger-brand">Burger</a>
+  <!-- Burger-Icon -->
+  <div class="burger-contain">
+    <div class="burger">
+      <div class="bun bun-top"></div>
+      <div class="bun bun-mid"></div>
+      <div class="bun bun-bottom"></div>
+    </div>
+
+    <!-- Burger-Brand -->
+    <a href="#" class="burger-brand">Burger</a>
+  </div>
 ```
 
 ## Contributing to Burger
