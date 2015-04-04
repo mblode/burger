@@ -4,7 +4,7 @@ $b-height: 60px;
 $b-margin: 30px;
 $b-bun-width: 24px;
 $b-bun-height: 2px;
-$b-transition: .6s;
+$b-transition: all .4s ease;
 $b-font-size: 24px;
 $b-font-weight: 300;
 $b-font-stack: Helvetica Neue, Helvetica, Sans-Serif;
@@ -17,7 +17,7 @@ $b-pad-top: ($b-height / 2 - $b-bun-width-half);
 
 @keyframes slideInLeft {
   0% {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-300px, 0, 0);
     visibility: visible;
   }
 
@@ -31,7 +31,7 @@ $b-pad-top: ($b-height / 2 - $b-bun-width-half);
   }
 
   100% {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-300px, 0, 0);
     visibility: hidden;
   }
 }
