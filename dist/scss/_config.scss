@@ -1,0 +1,42 @@
+$b-primary-color: rgba(4, 99, 128, 1);
+$b-light-color: #fff;
+$b-height: 60px;
+$b-margin: 30px;
+$b-bun-width: 24px;
+$b-bun-height: 2px;
+$b-transition: .6s;
+$b-font-size: 24px;
+$b-font-weight: 300;
+$b-font-stack: Helvetica Neue, Helvetica, Sans-Serif;
+$b-line-height: ($b-height / 2 - ($b-font-size / 2.8));
+$b-txt-pad: 30px;
+$b-txt-pad-top: ($b-margin + $b-height + $b-txt-pad);
+$b-bun-width-half: ($b-bun-width / 2);
+$b-pad-left: ($b-height / 2 - $b-bun-width-half - 2);
+$b-pad-top: ($b-height / 2 - $b-bun-width-half);
+
+@keyframes slideInLeft {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes slideOutLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-100%, 0, 0);
+    visibility: hidden;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
