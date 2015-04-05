@@ -14,7 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.4",
-    "burger": "~1.1.7"
+    "burger": "~1.2.0"
   }
 }
