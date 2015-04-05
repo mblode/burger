@@ -1,6 +1,6 @@
 {
   "name": "burger",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "homepage": "https://github.com/mblode/burger",
   "authors": [
     "mblode <m.blode@gmail.com>"
@@ -33,14 +33,14 @@
     "gulpfile.js",
     "package.json"
   ],
-  "_release": "1.2.0",
+  "_release": "1.2.1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.2.0",
-    "commit": "e3b67d8039af5e7617b0b92193cf98512e06c57e"
+    "tag": "v1.2.1",
+    "commit": "46fc8455ceb1ceb7e56921a77f74e73020ff5ce2"
   },
   "_source": "git://github.com/mblode/burger.git",
-  "_target": "~1.2.0",
+  "_target": "~1.2.1",
   "_originalSource": "burger",
   "_direct": true
 }

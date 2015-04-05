@@ -1,6 +1,6 @@
 {
   "name": "burger",
-  "version": "1.1.7",
+  "version": "1.2.1",
   "homepage": "https://github.com/mblode/burger",
   "authors": [
     "mblode <m.blode@gmail.com>"
@@ -13,7 +13,5 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "burger": "~1.2.0"
-  }
+  "dependencies": {}
 }

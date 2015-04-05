@@ -1,7 +1,7 @@
 @-webkit-keyframes slideInLeft {
   0% {
-    -webkit-transform: translate3d(-300px, 0, 0);
-            transform: translate3d(-300px, 0, 0);
+    -webkit-transform: translate3d(-250px, 0, 0);
+            transform: translate3d(-250px, 0, 0);
     visibility: visible; }
 
   100% {
@@ -10,8 +10,8 @@
 
 @keyframes slideInLeft {
   0% {
-    -webkit-transform: translate3d(-300px, 0, 0);
-            transform: translate3d(-300px, 0, 0);
+    -webkit-transform: translate3d(-250px, 0, 0);
+            transform: translate3d(-250px, 0, 0);
     visibility: visible; }
 
   100% {
@@ -24,8 +24,8 @@
             transform: translate3d(0, 0, 0); }
 
   100% {
-    -webkit-transform: translate3d(-300px, 0, 0);
-            transform: translate3d(-300px, 0, 0);
+    -webkit-transform: translate3d(-250px, 0, 0);
+            transform: translate3d(-250px, 0, 0);
     visibility: hidden; } }
 
 @keyframes slideOutLeft {
@@ -34,8 +34,8 @@
             transform: translate3d(0, 0, 0); }
 
   100% {
-    -webkit-transform: translate3d(-300px, 0, 0);
-            transform: translate3d(-300px, 0, 0);
+    -webkit-transform: translate3d(-250px, 0, 0);
+            transform: translate3d(-250px, 0, 0);
     visibility: hidden; } }
 
 * {
@@ -147,3 +147,17 @@
       padding-left: 30px; }
     .burger-nav li:first-child {
       margin-top: 120px; }
+  .burger-nav li:not(.open) {
+    -webkit-animation-duration: .4s;
+            animation-duration: .4s;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    -webkit-animation-name: slideOutLeft;
+            animation-name: slideOutLeft; }
+  .burger-nav.open li {
+    -webkit-animation-duration: .4s;
+            animation-duration: .4s;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    -webkit-animation-name: slideInLeft;
+            animation-name: slideInLeft; }
