@@ -1,66 +1,54 @@
-'use strict';
+(function(){
+	'use strict';
 
-$(document).ready(function () {
+	var burgerContain = document.getElementsByClassName('burger-contain')[0],
+		burgerNav = document.getElementsByClassName('burger-nav')[0],
+		burgerBrand = document.getElementsByClassName('burger-brand')[0];
 
-  var burgerNav = $('.burger-nav'),
-  burgerItem = burgerNav.find('li'),
-  burgerBrand = $('.burger-brand'),
-  isNavOpen = false,
-  burgerContain = $('.burger-contain');
+	burgerContain.onclick = function() {
+        toggleClass('open', burgerNav);
+        if(burgerNav.style.display === 'block') {
+        	fadeOut(burgerNav);
+        } else {
+        	fadeIn(burgerNav);
+        }
+        toggleClass('open', burgerContain);
+		toggleClass('open', burgerBrand);
+	};
 
-  burgerContain.click(function () {
-    burgerNav.fadeToggle(400);
+	function toggleClass(className, el) {
+		var current = el.className.split(/\s+/),
+			exist   = ~current.indexOf(className);
+		el.className = (exist ? (current.splice(-exist>>1,1), current) : current.concat([className])).join(' ');
+	}
 
-		if (isNavOpen === false) {
-			isNavOpen = true;
-      burgerNav.addClass('open');
-      burgerContain.addClass('open');
-      burgerBrand.addClass('open');
-			openNav();
+	function fadeOut(el){
+		el.style.opacity = 1;
 
-		} else {
-			isNavOpen = false;
-      burgerNav.removeClass('open');
-      burgerContain.removeClass('open');
-      burgerBrand.removeClass('open');
-			closeNav();
+		(function fade() {
+			if ((el.style.opacity -= 0.1) < 0) {
+				el.style.display = 'none';
+				el.classList.add('is-hidden');
+			} else {
+				requestAnimationFrame(fade);
+			}
+		})();
+	}
+
+	function fadeIn(el, display){
+		if (el.classList.contains('is-hidden')) {
+			el.classList.remove('is-hidden');
 		}
-  });
+		el.style.opacity = 0;
+		el.style.display = display || 'block';
 
-  function openNav() {
-    var transformDelay = 0;
+		(function fade() {
+			var val = parseFloat(el.style.opacity);
+			if ((val += 0.1) <= 1) {
+			  el.style.opacity = val;
+			  requestAnimationFrame(fade);
+			}
+		})();
+	}
 
-    for (var i = 0; i < burgerItem.length; i++) {
-      $(burgerItem[i]).velocity({
-          opacity: [1, 0],
-          translateX: [0, -250],
-          translateZ: [0, -100]
-        }, {
-          duration: 400,
-          delay: transformDelay,
-          easing: 'ease',
-        });
-      transformDelay += 50;
-    }
-  }
-
-  function closeNav() {
-
-    var transformDelay = 0;
-
-    for (var i = burgerItem.length - 1; i >= 0; i--) {
-      $(burgerItem[i]).velocity({
-        opacity: 0,
-        translateX: -250,
-        translateZ: -100,
-      }, {
-        duration: 400,
-        delay: transformDelay,
-        easing: 'ease',
-      });
-
-      transformDelay += 50;
-    }
-
-  }
-});
+})();
