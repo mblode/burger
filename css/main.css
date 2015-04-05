@@ -127,7 +127,10 @@
   .burger-nav li {
     list-style-type: none;
     padding: 10px;
-    text-align: left; }
+    text-align: left;
+    -webkit-transform: translateX(-250px);
+        -ms-transform: translateX(-250px);
+            transform: translateX(-250px); }
     .burger-nav li .burger-link {
       border-left: #fff solid 0;
       color: #fff;
