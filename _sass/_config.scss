@@ -15,6 +15,10 @@ $b-bun-width-half: ($b-bun-width / 2);
 $b-pad-left: ($b-height / 2 - $b-bun-width-half - 2);
 $b-pad-top: ($b-height / 2 - $b-bun-width-half);
 
+.is-hidden {
+  display: none;
+}
+
 @keyframes slideInLeft {
   0% {
     transform: translate3d(-250px, 0, 0);
