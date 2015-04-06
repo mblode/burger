@@ -69,6 +69,13 @@ These are the files that are generated from `bower install burger`
   </div>
 ```
 
+## Browser Compatibility
+* Safari 6.1+
+* IE 10+
+* Firefox 29+
+* Chrome 26+
+* Opera 17+
+
 ## Contributing to Burger
 
 Pull requests are the way to go.
