@@ -1,61 +1,62 @@
+.burger {
+  background: $b-primary-color;
+  border: rgba(255, 255, 255, 1) solid 2px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  height: $b-height;
+  padding-left: $b-pad-left;
+  padding-top: $b-pad-top;
+  position: relative;
+  transition: $b-transition;
+  user-select: none;
+  width: $b-height;
+  z-index: 999;
+}
+
+.bun {
+  background: $b-complement-color;
+  position: relative;
+  transition: $b-transition;
+}
+
+.bun-top {
+  height: $b-bun-height;
+  top: 0;
+  width: $b-bun-width;
+}
+
+.bun-mid {
+  height: $b-bun-height;
+  top: 8px;
+  width: $b-bun-width;
+}
+
+.bun-bottom {
+  height: $b-bun-height;
+  top: 16px;
+  width: $b-bun-width;
+}
+
+.burger-brand {
+  color: $b-primary-color;
+  font-family: $b-font-stack;
+  font-size: $b-font-size;
+  font-weight: 300;
+  left: 0;
+  margin-left: $b-txt-pad;
+  position: relative;
+  text-decoration: none;
+  top: -$b-line-height;
+  transition: $b-transition;
+  z-index: 2000;
+}
+
 .burger-contain {
   left: $b-margin;
   position: absolute;
   top: $b-margin;
   width: auto;
-
-  .burger {
-    background: $b-primary-color;
-    border: rgba(255, 255, 255, 1) solid 2px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-block;
-    height: $b-height;
-    padding-left: $b-pad-left;
-    padding-top: $b-pad-top;
-    position: relative;
-    transition: $b-transition;
-    width: $b-height;
-    z-index: 999;
-  }
-
-  .bun {
-    background: $b-light-color;
-    position: relative;
-    transition: $b-transition;
-  }
-
-  .bun-top {
-    height: $b-bun-height;
-    top: 0;
-    width: $b-bun-width;
-  }
-
-  .bun-mid {
-    height: $b-bun-height;
-    top: 8px;
-    width: $b-bun-width;
-  }
-
-  .bun-bottom {
-    height: $b-bun-height;
-    top: 16px;
-    width: $b-bun-width;
-  }
-
-  .burger-brand {
-    color: $b-primary-color;
-    font-family: $b-font-stack;
-    font-size: $b-font-size;
-    font-weight: 300;
-    left: 0;
-    margin-left: $b-txt-pad;
-    position: relative;
-    text-decoration: none;
-    top: -$b-line-height;
-    transition: $b-transition;
-    z-index: 2000;
-  }
 
   &:hover:not(.open) {
     .burger {
@@ -69,7 +70,7 @@
     }
 
     .bun-top {
-      background: $b-light-color;
+      background: $b-complement-color;
       top: 9px;
       transform: rotate(45deg);
     }
@@ -79,13 +80,13 @@
     }
 
     .bun-bottom {
-      background: $b-light-color;
+      background: $b-complement-color;
       top: 5px;
       transform: rotate(-45deg);
     }
 
     .burger-brand {
-      color: $b-light-color;
+      color: $b-complement-color;
     }
 
     &:hover .burger {
@@ -110,30 +111,7 @@
     padding: 10px;
     text-align: left;
     transform: translateX(-250px);
-
-    .burger-link {
-      border-left: $b-light-color solid 0;
-      color: $b-light-color;
-      font-family: $b-font-stack;
-      font-size: $b-font-size;
-      font-weight: $b-font-weight;
-      margin-left: $b-margin;
-      text-decoration: none;
-      transition: $b-transition;
-      width: auto;
-    }
-
-    .burger-link:hover,
-    .burger-link.active {
-      border-left: $b-light-color solid 2px;
-      padding-left: $b-txt-pad;
-    }
-
-    &:first-child {
-      margin-top: $b-txt-pad-top;
-    }
   }
-
 
   li:not(.open) {
     animation-duration: .4s;
@@ -141,11 +119,31 @@
     animation-name: slideOutLeft;
   }
 
-  &.open {
-    li {
-      animation-duration: .4s;
-      animation-fill-mode: both;
-      animation-name: slideInLeft;
-    }
+  li:first-child {
+    margin-top: $b-txt-pad-top;
   }
+
+  &.open li {
+    animation-duration: .4s;
+    animation-fill-mode: both;
+    animation-name: slideInLeft;
+  }
+}
+
+.burger-link {
+  border-left: $b-complement-color solid 0;
+  color: $b-complement-color;
+  font-family: $b-font-stack;
+  font-size: $b-font-size;
+  font-weight: $b-font-weight;
+  margin-left: $b-margin;
+  text-decoration: none;
+  transition: $b-transition;
+  width: auto;
+}
+
+.burger-link:hover,
+.burger-link.active {
+  border-left: $b-complement-color solid 2px;
+  padding-left: $b-txt-pad;
 }

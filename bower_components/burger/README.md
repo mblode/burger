@@ -1,7 +1,7 @@
 # Burger
 Burger is a minimal hamburger menu with fullscreen navigation. It is created by mblode.
 
-It requires [jQuery](https://jquery.com/) as a dependency.
+This project officially requires zero external bower dependencies. Woo-hoo!
 
 ## Burger in action
 ![Burger Gif](http://i.imgur.com/spSuHHZ.gif)
@@ -19,7 +19,7 @@ if you have cloned the repo or downloaded from .zip, there are a few steps you m
 
 1. Change directory: `cd burger`.
 2. Install node modules: `npm install`.
-3. Install bower components: `bower install`.
+3. Install scss-lint Ruby gem: `gem install scss-lint`. 
 4. To run gulp server: `gulp serve`.
 5. To run build process: `gulp build`.
 
@@ -68,6 +68,13 @@ These are the files that are generated from `bower install burger`
     <a href="#" class="burger-brand">Burger</a>
   </div>
 ```
+
+## Browser Compatibility
+* Safari 6.1+
+* IE 10+
+* Firefox 29+
+* Chrome 26+
+* Opera 17+
 
 ## Contributing to Burger
 

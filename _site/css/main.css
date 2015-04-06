@@ -1,6 +1,3 @@
-.is-hidden {
-  display: none; }
-
 @-webkit-keyframes slideInLeft {
   0% {
     -webkit-transform: translate3d(-250px, 0, 0);
@@ -45,55 +42,65 @@
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent; }
 
+.burger {
+  background: #046380;
+  border: white solid 2px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  height: 60px;
+  padding-left: 16px;
+  padding-top: 18px;
+  position: relative;
+  -webkit-transition: all .4s ease;
+          transition: all .4s ease;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 60px;
+  z-index: 999; }
+
+.bun {
+  background: #fff;
+  position: relative;
+  -webkit-transition: all .4s ease;
+          transition: all .4s ease; }
+
+.bun-top {
+  height: 2px;
+  top: 0;
+  width: 24px; }
+
+.bun-mid {
+  height: 2px;
+  top: 8px;
+  width: 24px; }
+
+.bun-bottom {
+  height: 2px;
+  top: 16px;
+  width: 24px; }
+
+.burger-brand {
+  color: #046380;
+  font-family: Helvetica Neue, Helvetica, Sans-Serif;
+  font-size: 24px;
+  font-weight: 300;
+  left: 0;
+  margin-left: 30px;
+  position: relative;
+  text-decoration: none;
+  top: -21.42857px;
+  -webkit-transition: all .4s ease;
+          transition: all .4s ease;
+  z-index: 2000; }
+
 .burger-contain {
   left: 30px;
   position: absolute;
   top: 30px;
   width: auto; }
-  .burger-contain .burger {
-    background: #046380;
-    border: white solid 2px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-block;
-    height: 60px;
-    padding-left: 16px;
-    padding-top: 18px;
-    position: relative;
-    -webkit-transition: all .4s ease;
-            transition: all .4s ease;
-    width: 60px;
-    z-index: 999; }
-  .burger-contain .bun {
-    background: #fff;
-    position: relative;
-    -webkit-transition: all .4s ease;
-            transition: all .4s ease; }
-  .burger-contain .bun-top {
-    height: 2px;
-    top: 0;
-    width: 24px; }
-  .burger-contain .bun-mid {
-    height: 2px;
-    top: 8px;
-    width: 24px; }
-  .burger-contain .bun-bottom {
-    height: 2px;
-    top: 16px;
-    width: 24px; }
-  .burger-contain .burger-brand {
-    color: #046380;
-    font-family: Helvetica Neue, Helvetica, Sans-Serif;
-    font-size: 24px;
-    font-weight: 300;
-    left: 0;
-    margin-left: 30px;
-    position: relative;
-    text-decoration: none;
-    top: -21.42857px;
-    -webkit-transition: all .4s ease;
-            transition: all .4s ease;
-    z-index: 2000; }
   .burger-contain:hover:not(.open) .burger {
     background: #0689b1; }
   .burger-contain.open .burger {
@@ -134,22 +141,6 @@
     -webkit-transform: translateX(-250px);
         -ms-transform: translateX(-250px);
             transform: translateX(-250px); }
-    .burger-nav li .burger-link {
-      border-left: #fff solid 0;
-      color: #fff;
-      font-family: Helvetica Neue, Helvetica, Sans-Serif;
-      font-size: 24px;
-      font-weight: 300;
-      margin-left: 30px;
-      text-decoration: none;
-      -webkit-transition: all .4s ease;
-              transition: all .4s ease;
-      width: auto; }
-    .burger-nav li .burger-link:hover, .burger-nav li .burger-link.active {
-      border-left: #fff solid 2px;
-      padding-left: 30px; }
-    .burger-nav li:first-child {
-      margin-top: 120px; }
   .burger-nav li:not(.open) {
     -webkit-animation-duration: .4s;
             animation-duration: .4s;
@@ -157,6 +148,8 @@
             animation-fill-mode: both;
     -webkit-animation-name: slideOutLeft;
             animation-name: slideOutLeft; }
+  .burger-nav li:first-child {
+    margin-top: 120px; }
   .burger-nav.open li {
     -webkit-animation-duration: .4s;
             animation-duration: .4s;
@@ -164,3 +157,19 @@
             animation-fill-mode: both;
     -webkit-animation-name: slideInLeft;
             animation-name: slideInLeft; }
+
+.burger-link {
+  border-left: #fff solid 0;
+  color: #fff;
+  font-family: Helvetica Neue, Helvetica, Sans-Serif;
+  font-size: 24px;
+  font-weight: 300;
+  margin-left: 30px;
+  text-decoration: none;
+  -webkit-transition: all .4s ease;
+          transition: all .4s ease;
+  width: auto; }
+
+.burger-link:hover, .burger-link.active {
+  border-left: #fff solid 2px;
+  padding-left: 30px; }

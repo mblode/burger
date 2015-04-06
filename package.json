@@ -1,7 +1,7 @@
 {
   "name": "burger",
-  "version": "1.2.2",
-  "description": "Burger is a minimal hamburger menu with fullscreen navigation.",
+  "version": "1.2.3",
+  "description": "Burger - The minimal hamburger menu with fullscreen navigation.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
