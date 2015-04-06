@@ -9,6 +9,7 @@
   padding-top: $b-pad-top;
   position: relative;
   transition: $b-transition;
+  user-select: none;
   width: $b-height;
   z-index: 999;
 }
