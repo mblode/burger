@@ -1,3 +1,8 @@
 node_modules
 bower_components
 .DS_Store
+_sass
+_site
+_layouts
+_includes
+.sass-cache
