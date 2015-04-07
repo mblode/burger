@@ -1,6 +1,6 @@
 {
   "name": "burger",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Burger - The minimal hamburger menu with fullscreen navigation.",
   "main": "index.js",
   "scripts": {

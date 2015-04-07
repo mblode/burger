@@ -6,7 +6,7 @@ relative_permalinks: true
 title:            Burger
 tagline:
 url:              "http://mblode.github.io/burger"
-baseurl:          "/"
+baseurl:          "/burger/"
 paginate:         3
 author:
   name:           Matthew Blode
