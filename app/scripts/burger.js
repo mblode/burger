@@ -17,6 +17,9 @@
   };
 
   function toggleClass(className, el) {
+    if (el.classList) {
+      return el.classList.toggle(className);
+    }
     var current = el.className.split(/\s+/),
       exist = ~current.indexOf(className);
     el.className = (exist ? (current.splice(-exist >> 1, 1), current) : current.concat([className])).join(' ');
