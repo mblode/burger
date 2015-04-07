@@ -8,6 +8,11 @@ This project officially requires zero external bower dependencies. Woo-hoo!
 
 ## [Demo on Codepen](http://codepen.io/mblode/pen/qEGWwB)
 
+## Screenshots
+![Burger: Closed](http://i.imgur.com/eElVkQI.png)
+
+![Burger: Opened](http://i.imgur.com/tI0ZeNw.png)
+
 ## Quick Start
 Several quick start options are available:
 
@@ -19,9 +24,17 @@ if you have cloned the repo or downloaded from .zip, there are a few steps you m
 
 1. Change directory: `cd burger`.
 2. Install node modules: `npm install`.
-3. Install scss-lint Ruby gem: `gem install scss-lint`. 
-4. To run gulp server: `gulp serve`.
+3. Install scss-lint Ruby gem: `gem install scss-lint`.
+4. To run gulp server: `gulp`.
 5. To run build process: `gulp build`.
+
+## Running Github Pages
+The gh-pages branch is built using Jekyll and must therefore be install with `gem install jekyll`.
+
+1. Checkout in to gh-pages: `git checkout gh-pages`.
+2. Install burger dependency: `bower install`.
+3. Run jekyll: `jekyll serve`.
+4. Open in browser: `localhost:4000/burger/`.
 
 
 ## What's Included

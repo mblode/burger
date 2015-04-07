@@ -1,12 +1,13 @@
 {
   "name": "burger",
-  "version": "1.2.7",
+  "version": "1.3.1",
   "homepage": "https://github.com/mblode/burger",
   "authors": [
     "mblode <m.blode@gmail.com>"
   ],
   "keywords": [
     "burger",
+    "mblode",
     "menu",
     "hamburger",
     "css",
@@ -32,5 +33,8 @@
     "app",
     "gulpfile.js",
     "package.json"
-  ]
+  ],
+  "dependencies": {
+    "burger": "~1.2.7"
+  }
 }
