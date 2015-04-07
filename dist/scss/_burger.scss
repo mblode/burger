@@ -1,3 +1,51 @@
+.burger-nav {
+  font-family: $b-font-stack;
+  position: absolute;
+  z-index: 11;
+
+  li {
+    color: $b-complement-color;
+    list-style-type: none;
+    padding: 10px;
+    text-align: left;
+    transform: translateX(-250px);
+  }
+
+  li:not(.open) {
+    animation-duration: .4s;
+    animation-fill-mode: both;
+    animation-name: slideOutLeft;
+  }
+
+  li:first-child {
+    padding-top: $b-txt-pad-top;
+  }
+
+  &.open li {
+    animation-duration: .4s;
+    animation-fill-mode: both;
+    animation-name: slideInLeft;
+  }
+}
+
+.burger-link {
+  border-left: $b-complement-color solid 0;
+  color: $b-complement-color;
+  font-family: $b-font-stack;
+  font-size: $b-font-size;
+  font-weight: $b-font-weight;
+  margin-left: $b-margin;
+  text-decoration: none;
+  transition: $b-transition;
+  width: auto;
+}
+
+.burger-link:hover,
+.burger-link.active {
+  border-left: $b-complement-color solid 2px;
+  padding-left: $b-txt-pad;
+}
+
 .burger {
   background: $b-primary-color;
   border: rgba(255, 255, 255, 1) solid 2px;
@@ -11,7 +59,7 @@
   transition: $b-transition;
   user-select: none;
   width: $b-height;
-  z-index: 999;
+  z-index: 12;
 }
 
 .bun {
@@ -93,57 +141,4 @@
       border: rgba(255, 255, 255, 1) solid 2px;
     }
   }
-}
-
-.burger-nav {
-  background: $b-primary-color;
-  display: none;
-  font-family: $b-font-stack;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 999;
-
-  li {
-    list-style-type: none;
-    padding: 10px;
-    text-align: left;
-    transform: translateX(-250px);
-  }
-
-  li:not(.open) {
-    animation-duration: .4s;
-    animation-fill-mode: both;
-    animation-name: slideOutLeft;
-  }
-
-  li:first-child {
-    margin-top: $b-txt-pad-top;
-  }
-
-  &.open li {
-    animation-duration: .4s;
-    animation-fill-mode: both;
-    animation-name: slideInLeft;
-  }
-}
-
-.burger-link {
-  border-left: $b-complement-color solid 0;
-  color: $b-complement-color;
-  font-family: $b-font-stack;
-  font-size: $b-font-size;
-  font-weight: $b-font-weight;
-  margin-left: $b-margin;
-  text-decoration: none;
-  transition: $b-transition;
-  width: auto;
-}
-
-.burger-link:hover,
-.burger-link.active {
-  border-left: $b-complement-color solid 2px;
-  padding-left: $b-txt-pad;
 }
