@@ -1,28 +1,11 @@
-# Permalinks
-permalink:        "/blog/:title"
-relative_permalinks: true
+# Site settings
+title: Burger
+email: m.blode@gmail.com
+description: Burger - The minimal hamburger menu with fullscreen navigation.
+baseurl: "/burger" # the subpath of your site, e.g. /blog/
+url: "http://mblode.github.io" # the base hostname & protocol for your site
+twitter_username: mblode
+github_username:  mblode
 
-# Setup
-title:            Burger
-tagline:
-url:              "http://mblode.github.io/burger"
-baseurl:          "/burger/"
-paginate:         3
-author:
-  name:           Matthew Blode
-  url:            https://twitter.com/mblode
-  email:          m.blode@gmail.com
-
-# Custom vars
-version:          1.2.2
-github:
-  repo:           https://github.com/mblode/burger
-
-highlighter: pygments
-safe: true
-lsi: false
-
-sass:
-  style: :compressed
-
-exclude: ["node_modules", "gulpfile.js", "package.json", "bower-components", "bower.json"]
+# Build settings
+markdown: kramdown
