@@ -28,19 +28,15 @@
 		(function fade() {
 			if ((el.style.opacity -= 0.11) < 0) {
 				el.style.display = 'none';
-				el.classList.add('is-hidden');
 			} else {
 				requestAnimationFrame(fade);
 			}
 		})();
 	}
 
-	function fadeIn(el, display){
-		if (el.classList.contains('is-hidden')) {
-			el.classList.remove('is-hidden');
-		}
+	function fadeIn(el){
 		el.style.opacity = 0;
-		el.style.display = display || 'block';
+		el.style.display = 'block';
 
 		(function fade() {
 			var val = parseFloat(el.style.opacity);
