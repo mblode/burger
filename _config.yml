@@ -2,7 +2,7 @@
 title: Burger
 email: m.blode@gmail.com
 description: Burger - The minimal hamburger menu with fullscreen navigation.
-baseurl: "/implicit" # the subpath of your site, e.g. /blog/
+baseurl: "/burger" # the subpath of your site, e.g. /blog/
 url: "http://mblode.github.io" # the base hostname & protocol for your site
 twitter_username: mblode
 github_username:  mblode
