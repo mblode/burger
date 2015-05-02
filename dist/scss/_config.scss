@@ -7,7 +7,6 @@ $b-bun-height: 2px; //Height of the 'buns'
 $b-transition: all .4s ease; //Transition settings
 $b-font-size: 24px; //Font size of brand and links
 $b-font-weight: 300; //Font weight of brand and links
-$b-font-stack: Helvetica Neue, Helvetica, Sans-Serif; //Font family of brand and links
 $b-line-height: ($b-height / 2 - ($b-font-size / 2.8)); //Vertically centers brand to menu
 $b-txt-pad: 30px; //Left padding on both brand and links
 $b-txt-pad-top: ($b-margin + $b-height + $b-txt-pad); //Top margin for first link element
@@ -42,14 +41,16 @@ $b-pad-top: ($b-height / 2 - $b-bun-width-half); //Vertically centers bun in men
 }
 
 html,
-body {
+body.open {
   height: 100%;
   margin: 0;
   min-height: 100%;
 }
 
 body {
+  margin: 0;
   position: relative;
+  width: 100%;
 
   &:after {
     background: $b-primary-color;

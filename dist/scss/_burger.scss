@@ -1,5 +1,4 @@
 .burger-nav {
-  font-family: $b-font-stack;
   position: absolute;
   z-index: 11;
 
@@ -29,9 +28,9 @@
 }
 
 .burger-link {
+  background: transparent;
   border-left: $b-complement-color solid 0;
   color: $b-complement-color;
-  font-family: $b-font-stack;
   font-size: $b-font-size;
   font-weight: $b-font-weight;
   margin-left: $b-margin;
@@ -88,7 +87,6 @@
 
 .burger-brand {
   color: $b-primary-color;
-  font-family: $b-font-stack;
   font-size: $b-font-size;
   font-weight: 300;
   left: 0;
