@@ -2,6 +2,14 @@
   position: absolute;
   z-index: 11;
 
+  &:not(.open) {
+    visibility: hidden;
+  }
+
+  &.open {
+    visibility: visible;
+  }
+
   li {
     color: $b-complement-color;
     list-style-type: none;
