@@ -4,7 +4,8 @@ $b-height: 60px; //Height (and width) of the burger menu
 $b-margin: 30px; //Burger menu margin (distance from edge)
 $b-bun-width: 24px; //Width of the 'buns'
 $b-bun-height: 2px; //Height of the 'buns'
-$b-transition: all .4s ease; //Transition settings
+$b-trans-speed: .4s; //Transition speed settings
+$b-trans: all $b-trans-speed ease; //Transition speed settings
 $b-font-size: 24px; //Font size of brand and links
 $b-font-weight: 300; //Font weight of brand and links
 $b-line-height: ($b-height / 2 - ($b-font-size / 2.8)); //Vertically centers brand to menu
@@ -49,25 +50,26 @@ body.open {
 
 body {
   margin: 0;
+  overflow: hidden;
+  padding: 0;
   position: relative;
-  width: 100%;
 
   &:after {
     background: $b-primary-color;
     content: '';
-    display: block;
-    height: 100%;
+    height: 100vh;
     left: 0;
     opacity: 0;
-    position: fixed;
+    overflow: hidden;
+    position: absolute;
     top: 0;
-    transition: $b-transition;
-    width: 100%;
-    z-index: 10;
+    transition: $b-trans;
+    visibility: hidden;
+    width: 100vw;
   }
 
   &.open:after {
-    background: $b-primary-color;
     opacity: 1;
+    visibility: visible;
   }
 }

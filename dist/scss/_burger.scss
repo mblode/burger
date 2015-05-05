@@ -35,7 +35,7 @@
   font-weight: $b-font-weight;
   margin-left: $b-margin;
   text-decoration: none;
-  transition: $b-transition;
+  transition: $b-trans;
   width: auto;
 }
 
@@ -55,7 +55,7 @@
   padding-left: $b-pad-left;
   padding-top: $b-pad-top;
   position: relative;
-  transition: $b-transition;
+  transition: $b-trans;
   user-select: none;
   width: $b-height;
   z-index: 12;
@@ -64,7 +64,7 @@
 .bun {
   background: $b-complement-color;
   position: relative;
-  transition: $b-transition;
+  transition: $b-trans;
 }
 
 .bun-top {
@@ -94,7 +94,7 @@
   position: relative;
   text-decoration: none;
   top: -$b-line-height;
-  transition: $b-transition;
+  transition: $b-trans;
   z-index: 2000;
 }
 
