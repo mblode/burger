@@ -1,6 +1,6 @@
 {
-  "name": "implicit",
-  "version": "1.0.0",
+  "name": "burger",
+  "version": "2.0.1",
   "homepage": "https://github.com/mblode/implicit.css",
   "authors": [
     "mblode <m.blode@gmail.com>"
@@ -14,6 +14,9 @@
     "tests"
   ],
   "dependencies": {
-    "burger": "~1.3.1"
+    "burger": "~2.0.1"
+  },
+  "resolutions": {
+    "burger": "~2.0.1"
   }
 }

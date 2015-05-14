@@ -1,13 +1,13 @@
+'use strict';
+
 (function() {
-  'use strict';
-
   var body = document.body;
-  var burgerContain = document.getElementsByClassName('burger-contain')[0];
-  var burgerNav = document.getElementsByClassName('burger-nav')[0];
-  var burgerBrand = document.getElementsByClassName('burger-brand')[0];
+  var burgerMenu = document.getElementsByClassName('b-menu')[0];
+  var burgerContain = document.getElementsByClassName('b-container')[0];
+  var burgerNav = document.getElementsByClassName('b-nav')[0];
 
-  burgerContain.addEventListener('click', function toggleClasses() {
-    [body, burgerContain, burgerNav, burgerBrand].forEach(function (el) {
+  burgerMenu.addEventListener('click', function toggleClasses() {
+    [body, burgerContain, burgerNav].forEach(function (el) {
       el.classList.toggle('open');
     });
   }, false);

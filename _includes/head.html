@@ -3,11 +3,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <title>{{ page.title }}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
   <link rel="stylesheet" href="{{ "/components/burger/dist/css/burger.min.css" | prepend: site.baseurl }}">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
   <link rel="apple-touch-icon" sizes="57x57" href="{{ "/favicons/apple-touch-icon-57x57.png" | prepend: site.baseurl }}">
   <link rel="apple-touch-icon" sizes="60x60" href="{{ "/favicons/apple-touch-icon-60x60.png" | prepend: site.baseurl }}">
