@@ -67,10 +67,11 @@ body {
     height: 100%;
     left: 0;
     opacity: 0;
-    overflow: auto;
+    overflow: hidden;
     padding: 0;
     position: absolute;
     top: 0;
+    visibility: hidden;
     transition: $b-transition;
     width: 100%;
   }
