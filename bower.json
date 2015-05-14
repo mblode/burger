@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "burger": "~2.0.1"
+    "burger": "~2.0.2"
   },
   "resolutions": {
     "burger": "~2.0.1"
