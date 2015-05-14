@@ -1,6 +1,6 @@
 {
   "name": "burger",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/mblode/burger",
   "authors": [
     "mblode <m.blode@gmail.com>"
@@ -30,7 +30,7 @@
     "bower_components",
     "test",
     "tests",
-    "app",
+    "src",
     "gulpfile.js",
     "package.json"
   ]
