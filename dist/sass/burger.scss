@@ -1,0 +1,234 @@
+$color-stack:
+	(group: primary, id: normal, color: #2196f3),
+  (group: primary, id: pale, color: #64b5f6),
+	(group: complement, id: normal, color: #fff);
+
+@function color($group, $shade:normal, $transparency:1) {
+  @each $color in $color-stack {
+    $c-group: map-get($color, group);
+    $c-shade: map-get($color, id);
+    @if($group == map-get($color, group) and $shade == map-get($color, id)){
+      @return rgba(map-get($color, color), $transparency);
+    }
+  }
+}
+
+$b-color-primary: #2196f3;
+$b-color-complement: #fff;
+$b-height: 52px; //Height (and width) of the burger menu
+$b-margin: 50px; //Burger menu margin (distance from edge)
+$b-bun-width: 24px; //Width of the 'buns'
+$b-bun-height: 2px; //Height of the 'buns'
+$b-border-radius: 50%;
+$b-trans-speed: .4s; //Transition speed settings
+$b-transition: all $b-trans-speed ease; //Transition speed settings
+$b-font-size: 24px; //Font size of brand and links
+$b-font-weight: 300; //Font weight of brand and links
+$b-line-height: ($b-height / 2 - ($b-font-size / 2.8)); //Vertically centers brand to menu
+$b-txt-pad: 30px; //Left padding on both brand and links
+$b-txt-pad-top: ($b-margin + $b-height + $b-txt-pad); //Top margin for first link element
+$b-bun-width-half: ($b-bun-width / 2); //Half bun width used for calculation
+$b-pad-left: ($b-height / 2 - $b-bun-width-half - 2); //Horizontally centers bun in menu
+$b-pad-top: ($b-height / 2 - $b-bun-width-half); //Vertically centers bun in menu
+
+@keyframes slideInLeft {
+  0% {
+    transform: translate3d(-250px, 0, 0);
+    visibility: visible;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOutLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-250px, 0, 0);
+    visibility: hidden;
+  }
+}
+
+html,
+body.open {
+  height: 100%;
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: helvetica-neue, helvetica;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+
+  &:after {
+    background: $b-color-primary;
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    transition: opacity $b-trans-speed;
+    visibility: hidden;
+    width: 100vw;
+    z-index: 10;
+  }
+
+  &.open:after {
+    background: $b-color-primary;
+    height: 100%;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.b-nav {
+  position: absolute;
+  z-index: 11;
+
+  &:not(.open) {
+    visibility: hidden;
+  }
+
+  li {
+    color: color(complement, normal);
+    list-style-type: none;
+    padding: 10px;
+    text-align: left;
+    transform: translateX(-250px);
+  }
+
+  li:not(.open) {
+    animation-duration: $b-trans-speed;
+    animation-fill-mode: both;
+    animation-name: slideOutLeft;
+  }
+
+  li:first-child {
+    padding-top: $b-txt-pad-top;
+  }
+
+  &.open li {
+    animation-duration: $b-trans-speed;
+    animation-fill-mode: both;
+    animation-name: slideInLeft;
+  }
+}
+
+.b-link {
+  border-left: $b-color-complement solid 0;
+  color: $b-color-complement;
+  font-size: $b-font-size;
+  margin-left: $b-margin;
+  text-decoration: none;
+  transition: $b-transition;
+  width: auto;
+}
+
+.b-link:hover,
+.b-link--active {
+  border-left: $b-color-complement solid 2px;
+  padding-left: $b-txt-pad;
+}
+
+.b-menu {
+  background: $b-color-primary;
+  border: $b-color-complement solid 2px;
+  border-radius: $b-border-radius;
+  cursor: pointer;
+  display: inline-block;
+  height: $b-height;
+  padding-left: $b-pad-left;
+  padding-top: $b-pad-top;
+  position: relative;
+  transition: $b-transition;
+  width: $b-height;
+  z-index: 12;
+}
+
+.b-bun {
+  background: $b-color-complement;
+  position: relative;
+  transition: $b-transition;
+}
+
+.b-bun--top {
+  height: $b-bun-height;
+  top: 0;
+  width: $b-bun-width;
+}
+
+.b-bun--mid {
+  height: $b-bun-height;
+  top: 8px;
+  width: $b-bun-width;
+}
+
+.b-bun--bottom {
+  height: $b-bun-height;
+  top: 16px;
+  width: $b-bun-width;
+}
+
+.b-brand {
+  color: $b-color-primary;
+  font-size: $b-font-size;
+  left: 0;
+  margin-left: $b-txt-pad;
+  position: relative;
+  text-decoration: none;
+  top: -$b-line-height;
+  transition: $b-transition;
+  z-index: 2000;
+}
+
+.b-container {
+  left: $b-margin;
+  position: absolute;
+  top: $b-margin;
+  width: auto;
+
+  &:hover:not(.open) {
+    .b-menu {
+      background: lighten($b-color-primary, 10);
+    }
+  }
+
+  &.open {
+    .b-main {
+      border: $b-color-complement solid 2px;
+    }
+
+    .b-bun--top {
+      background: $b-color-complement;
+      top: 9px;
+      transform: rotate(45deg);
+    }
+
+    .b-bun--mid {
+      opacity: 0;
+    }
+
+    .b-bun--bottom {
+      background: $b-color-complement;
+      top: 5px;
+      transform: rotate(-45deg);
+    }
+
+    .b-brand {
+      color: $b-color-complement;
+    }
+
+    &:hover .b-menu {
+      border: $b-color-complement solid 2px;
+    }
+  }
+}
