@@ -1,7 +1,6 @@
 $color-stack:
-	(group: primary, id: normal, color: #2196f3),
-  (group: primary, id: pale, color: #64b5f6),
-	(group: complement, id: normal, color: #fff);
+  (group: primary, id: normal, color: #2196f3),
+  (group: complement, id: normal, color: #fff);
 
 @function color($group, $shade:normal, $transparency:1) {
   @each $color in $color-stack {
@@ -13,20 +12,24 @@ $color-stack:
   }
 }
 
-$b-color-primary: #2196f3;
-$b-color-complement: #fff;
-$b-height: 52px; //Height (and width) of the burger menu
-$b-margin: 50px; //Burger menu margin (distance from edge)
-$b-bun-width: 24px; //Width of the 'buns'
-$b-bun-height: 2px; //Height of the 'buns'
-$b-border-radius: 50%;
+$b-height: 60px; //Height (and width) of the burger menu
+$b-margin-top: 30px; //Burger menu margin (distance from top)
+$b-margin-left: 30px; //Burger menu margin (distance from left)
+$b-border-width: 2px; //Width of the borders and 'buns'
+$b-bun-width: 25px; //Width of the 'buns'
+$b-bun-height: $b-border-width; //Height of the 'buns'
+$b-border-radius: 50%; //Change the border radius of the menu
+
 $b-trans-speed: .4s; //Transition speed settings
-$b-transition: all $b-trans-speed ease; //Transition speed settings
+$b-transition: all $b-trans-speed ease; //Transitions
+
 $b-font-size: 24px; //Font size of brand and links
+$b-font-family: Helvetica-Neue, Helvetica, Arial, sans-serif; //Font family of the brand and links
 $b-font-weight: 300; //Font weight of brand and links
-$b-line-height: ($b-height / 2 - ($b-font-size / 2.8)); //Vertically centers brand to menu
 $b-txt-pad: 30px; //Left padding on both brand and links
-$b-txt-pad-top: ($b-margin + $b-height + $b-txt-pad); //Top margin for first link element
+
+$b-line-height: ($b-height / 2 - ($b-font-size / 2.8)); //Vertically centers brand to menu
+$b-txt-pad-top: ($b-margin-top + $b-height + $b-txt-pad - $b-font-size); //Top margin for first link element
 $b-bun-width-half: ($b-bun-width / 2); //Half bun width used for calculation
 $b-pad-left: ($b-height / 2 - $b-bun-width-half - 2); //Horizontally centers bun in menu
 $b-pad-top: ($b-height / 2 - $b-bun-width-half); //Vertically centers bun in menu
@@ -53,38 +56,30 @@ $b-pad-top: ($b-height / 2 - $b-bun-width-half); //Vertically centers bun in men
   }
 }
 
-html,
-body.open {
-  height: 100%;
-  margin: 0;
-  min-height: 100%;
+* {
+  box-sizing: border-box;
 }
 
 body {
-  font-family: helvetica-neue, helvetica;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-
   &:after {
-    background: $b-color-primary;
+    background: color(primary);
     content: '';
     height: 100%;
     left: 0;
     opacity: 0;
-    overflow: hidden;
+    overflow: auto;
+    padding: 0;
     position: absolute;
     top: 0;
-    transition: opacity $b-trans-speed;
-    visibility: hidden;
-    width: 100vw;
-    z-index: 10;
+    transition: $b-transition;
+    width: 100%;
+  }
+
+  &.open {
+    overflow: hidden;
   }
 
   &.open:after {
-    background: $b-color-primary;
-    height: 100%;
     opacity: 1;
     visibility: visible;
   }
@@ -99,7 +94,7 @@ body {
   }
 
   li {
-    color: color(complement, normal);
+    color: color(complement);
     list-style-type: none;
     padding: 10px;
     text-align: left;
@@ -116,32 +111,39 @@ body {
     padding-top: $b-txt-pad-top;
   }
 
-  &.open li {
-    animation-duration: $b-trans-speed;
-    animation-fill-mode: both;
-    animation-name: slideInLeft;
+  &.open {
+    visibility: visible;
+
+    li {
+      animation-duration: $b-trans-speed;
+      animation-fill-mode: both;
+      animation-name: slideInLeft;
+    }
   }
 }
 
 .b-link {
-  border-left: $b-color-complement solid 0;
-  color: $b-color-complement;
+  background: transparent;
+  border-left: color(complement, normal, 0) solid $b-border-width;
+  color: color(complement);
+  font-family: $b-font-family;
   font-size: $b-font-size;
-  margin-left: $b-margin;
+  font-weight: $b-font-weight;
+  margin-left: $b-margin-left;
   text-decoration: none;
   transition: $b-transition;
   width: auto;
-}
 
-.b-link:hover,
-.b-link--active {
-  border-left: $b-color-complement solid 2px;
-  padding-left: $b-txt-pad;
+  &:hover,
+  &--active {
+    border-left: color(complement) solid $b-border-width;
+    padding-left: $b-txt-pad;
+  }
 }
 
 .b-menu {
-  background: $b-color-primary;
-  border: $b-color-complement solid 2px;
+  background: color(primary);
+  border: color(primary) solid $b-border-width;
   border-radius: $b-border-radius;
   cursor: pointer;
   display: inline-block;
@@ -150,65 +152,73 @@ body {
   padding-top: $b-pad-top;
   position: relative;
   transition: $b-transition;
+  user-select: none;
   width: $b-height;
   z-index: 12;
+
+  &:hover {
+    border: color(complement) solid $b-border-width;
+  }
 }
 
 .b-bun {
-  background: $b-color-complement;
+  background: color(complement);
   position: relative;
   transition: $b-transition;
-}
 
-.b-bun--top {
-  height: $b-bun-height;
-  top: 0;
-  width: $b-bun-width;
-}
+  &--top {
+    height: $b-bun-height;
+    top: 0;
+    width: $b-bun-width;
+  }
 
-.b-bun--mid {
-  height: $b-bun-height;
-  top: 8px;
-  width: $b-bun-width;
-}
+  &--mid {
+    height: $b-bun-height;
+    top: 8px;
+    width: $b-bun-width;
+  }
 
-.b-bun--bottom {
-  height: $b-bun-height;
-  top: 16px;
-  width: $b-bun-width;
+  &--bottom {
+    height: $b-bun-height;
+    top: 16px;
+    width: $b-bun-width;
+  }
 }
 
 .b-brand {
-  color: $b-color-primary;
+  color: color(primary);
+  font-family: $b-font-family;
   font-size: $b-font-size;
-  left: 0;
+  font-weight: $b-font-weight;
   margin-left: $b-txt-pad;
   position: relative;
   text-decoration: none;
   top: -$b-line-height;
   transition: $b-transition;
-  z-index: 2000;
+  z-index: 13;
 }
 
 .b-container {
-  left: $b-margin;
+  height: $b-height;
+  left: $b-margin-left;
   position: absolute;
-  top: $b-margin;
-  width: auto;
+  top: $b-margin-top;
 
   &:hover:not(.open) {
-    .b-menu {
-      background: lighten($b-color-primary, 10);
+    .bun-top,
+    .bun-mid,
+    .bun-bottom {
+      background: color(primary);
     }
   }
 
   &.open {
     .b-main {
-      border: $b-color-complement solid 2px;
+      border: color(complement) solid $b-border-width;
     }
 
     .b-bun--top {
-      background: $b-color-complement;
+      background: color(complement);
       top: 9px;
       transform: rotate(45deg);
     }
@@ -218,17 +228,13 @@ body {
     }
 
     .b-bun--bottom {
-      background: $b-color-complement;
+      background: color(complement);
       top: 5px;
       transform: rotate(-45deg);
     }
 
     .b-brand {
-      color: $b-color-complement;
-    }
-
-    &:hover .b-menu {
-      border: $b-color-complement solid 2px;
+      color: color(complement);
     }
   }
 }
