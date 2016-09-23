@@ -18,7 +18,6 @@
   ],
   "main": [
     "dist/css/burger.min.css",
-    "dist/css/burger.css",
     "dist/scripts/burger.min.js",
     "dist/index.html",
     "dist/scss/burger.scss"
