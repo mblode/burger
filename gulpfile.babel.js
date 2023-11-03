@@ -1,10 +1,13 @@
 'use strict';
 
-var gulp = require('gulp');
-var g = require('gulp-load-plugins')();
-var browserSync = require('browser-sync');
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import gulpLoadPlugins from 'gulp-load-plugins';
 
-gulp.task('browser-sync', function() {
+const g = gulpLoadPlugins();
+const reload = browserSync.reload;
+
+gulp.task('browser-sync', () => {
   browserSync({
     server: {
        baseDir: './dist/'
@@ -12,19 +15,16 @@ gulp.task('browser-sync', function() {
   });
 });
 
-gulp.task('bs-reload', function () {
-  browserSync.reload();
-});
 
-gulp.task('scss-lint', function() {
+gulp.task('scss-lint', () => {
   gulp.src('/scss/**/*.scss')
     .pipe(g.scssLint());
 });
 
-gulp.task('styles', ['scss-lint'], function(){
+gulp.task('styles', ['scss-lint'], () => {
   gulp.src(['src/sass/**/*.scss'])
     .pipe(g.plumber({
-      errorHandler: function (error) {
+      errorHandler: (error) => {
         console.log(error.message);
         this.emit('end');
     }}))
@@ -39,19 +39,19 @@ gulp.task('styles', ['scss-lint'], function(){
       .pipe(g.rename({suffix: '.min'}))
     .pipe(g.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/css/'))
-    .pipe(browserSync.reload({stream:true}));
+    .pipe(reload({stream:true}));
 });
 
-gulp.task('js-hint', function() {
+gulp.task('js-hint', () => {
   return gulp.src(['src/styles/**/*.scss'])
     .pipe(g.jshint())
     .pipe(g.jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('scripts', ['js-hint'], function(){
+gulp.task('scripts', ['js-hint'], () => {
   return gulp.src('src/scripts/**/*.js')
     .pipe(g.plumber({
-      errorHandler: function (error) {
+      errorHandler: (error) => {
         console.log(error.message);
         this.emit('end');
     }}))
@@ -62,16 +62,16 @@ gulp.task('scripts', ['js-hint'], function(){
       .pipe(g.uglify())
     .pipe(g.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/scripts/'))
-    .pipe(browserSync.reload({stream:true}));
+    .pipe(reload({stream:true}));
 });
 
-gulp.task('html', function() {
+gulp.task('html', () => {
   return gulp.src(['src/*.html'])
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['browser-sync'], function(){
+gulp.task('default', ['browser-sync'], () => {
   gulp.watch('src/sass/**/*.scss', ['styles']);
   gulp.watch('src/scripts/**/*.js', ['scripts']);
-  gulp.watch('src/**/*.html', ['html', 'bs-reload']);
+  gulp.watch('src/**/*.html', ['html', reload]);
 });
