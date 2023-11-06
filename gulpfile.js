@@ -1,77 +1,81 @@
-'use strict';
+const { src, dest, watch, series, parallel } = require('gulp');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const browserSync = require('browser-sync').create();
+const sass = require('gulp-sass')(require('sass'));
+const postcss = require('gulp-postcss');
+const postcssPresetEnv = require('postcss-preset-env');
 
-var gulp = require('gulp');
-var g = require('gulp-load-plugins')();
-var browserSync = require('browser-sync');
+// Load all Gulp plugins into the variable g
+const g = gulpLoadPlugins();
 
-gulp.task('browser-sync', function() {
-  browserSync({
+// Styles Task
+function styles() {
+  return src('src/sass/**/*.scss')
+    .pipe(g.plumber({
+      errorHandler: function (error) {
+        console.log(error.message);
+        this.emit('end');
+      }
+    }))
+    .pipe(g.sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    // Use PostCSS with preset-env
+    .pipe(postcss([
+      postcssPresetEnv(/* plugin options */)
+    ]))
+    .pipe(g.rename({ suffix: '.min' }))
+    .pipe(g.sourcemaps.write('.'))
+    .pipe(dest('dist/css/'))
+    .pipe(browserSync.stream());
+}
+
+// Scripts Task
+function scripts() {
+  return src('src/scripts/**/*.js')
+    .pipe(g.plumber({
+      errorHandler: function (error) {
+        console.log(error.message);
+        this.emit('end');
+      }
+    }))
+    .pipe(g.sourcemaps.init())
+    .pipe(g.concat('bundle.js'))
+    .pipe(dest('dist/scripts/'))
+    .pipe(g.rename({ suffix: '.min' }))
+    .pipe(g.uglify())
+    .pipe(g.sourcemaps.write('.'))
+    .pipe(dest('dist/scripts/'))
+    .pipe(browserSync.stream());
+}
+
+// HTML Task
+function html() {
+  return src('src/*.html')
+    .pipe(dest('dist/'))
+    .pipe(browserSync.stream());
+}
+
+// Browser Sync Task
+function serve() {
+  browserSync.init({
     server: {
-       baseDir: './dist/'
+      baseDir: './dist/'
     }
   });
-});
+}
 
-gulp.task('bs-reload', function () {
-  browserSync.reload();
-});
+// Watch Task
+function watchFiles() {
+  watch('src/sass/**/*.scss', styles);
+  watch('src/scripts/**/*.js', scripts);
+  watch('src/*.html', html);
+  // Reloads the browser whenever HTML or JS files change
+  watch('src/**/*.html').on('change', browserSync.reload);
+  watch('src/scripts/**/*.js').on('change', browserSync.reload);
+}
 
-gulp.task('scss-lint', function() {
-  gulp.src('/scss/**/*.scss')
-    .pipe(g.scssLint());
-});
-
-gulp.task('styles', ['scss-lint'], function(){
-  gulp.src(['src/sass/**/*.scss'])
-    .pipe(g.plumber({
-      errorHandler: function (error) {
-        console.log(error.message);
-        this.emit('end');
-    }}))
-    .pipe(gulp.dest('dist/sass/'))
-    .pipe(g.sourcemaps.init())
-      .pipe(g.sass({
-        precision: 10,
-        onError: console.error.bind(console, 'Sass error:')
-      }))
-      .pipe(g.autoprefixer('last 2 versions'))
-      .pipe(g.minifyCss())
-      .pipe(g.rename({suffix: '.min'}))
-    .pipe(g.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/css/'))
-    .pipe(browserSync.reload({stream:true}));
-});
-
-gulp.task('js-hint', function() {
-  return gulp.src(['src/styles/**/*.scss'])
-    .pipe(g.jshint())
-    .pipe(g.jshint.reporter('jshint-stylish'));
-});
-
-gulp.task('scripts', ['js-hint'], function(){
-  return gulp.src('src/scripts/**/*.js')
-    .pipe(g.plumber({
-      errorHandler: function (error) {
-        console.log(error.message);
-        this.emit('end');
-    }}))
-    .pipe(g.sourcemaps.init())
-      .pipe(g.concat('burger.js'))
-      .pipe(gulp.dest('dist/scripts/'))
-      .pipe(g.rename({suffix: '.min'}))
-      .pipe(g.uglify())
-    .pipe(g.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/scripts/'))
-    .pipe(browserSync.reload({stream:true}));
-});
-
-gulp.task('html', function() {
-  return gulp.src(['src/*.html'])
-    .pipe(gulp.dest('dist/'));
-});
-
-gulp.task('default', ['browser-sync'], function(){
-  gulp.watch('src/sass/**/*.scss', ['styles']);
-  gulp.watch('src/scripts/**/*.js', ['scripts']);
-  gulp.watch('src/**/*.html', ['html', 'bs-reload']);
-});
+// Default Gulp Task
+exports.default = series(
+  parallel(html, styles, scripts),
+  parallel(serve, watchFiles)
+);
