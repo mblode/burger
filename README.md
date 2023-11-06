@@ -1,22 +1,22 @@
 # Burger
+
 Burger is a minimal hamburger menu with fullscreen navigation. It is created by mblode.
 
 This project officially requires zero external bower dependencies. Woo-hoo!
 
-## Burger in action
-![Burger Gif](http://i.imgur.com/spSuHHZ.gif)
-
 ## [Demo on Codepen](http://codepen.io/mblode/pen/qEGWwB)
 
 ## Screenshots
+
 ![Burger: Closed](http://i.imgur.com/eElVkQI.png)
 
 ![Burger: Opened](http://i.imgur.com/tI0ZeNw.png)
 
 ## Quick Start
+
 Several quick start options are available:
 
-- Install with [Bower](http://bower.io): `bower install burger` (recommended).
+- Install with npm: `npm install the-burger` (recommended).
 - [Download the latest release](https://github.com/mblode/burger/archive/master.zip).
 - Clone the repo: `git clone https://github.com/mblode/burger.git`.
 
@@ -29,6 +29,7 @@ if you have cloned the repo or downloaded from .zip, there are a few steps you m
 5. To run build process: `gulp build`.
 
 ## Running Github Pages
+
 The gh-pages branch is built using Jekyll and must therefore be install with `gem install jekyll`.
 
 1. Checkout in to gh-pages: `git checkout gh-pages`.
@@ -36,8 +37,8 @@ The gh-pages branch is built using Jekyll and must therefore be install with `ge
 3. Run jekyll: `jekyll serve`.
 4. Open in browser: `localhost:4000/burger/`.
 
-
 ## What's Included
+
 These are the files that are generated from `bower install burger`
 
 ```
@@ -58,7 +59,9 @@ These are the files that are generated from `bower install burger`
 ```
 
 ## Documentation
+
 ### HTML Markup
+
 ```
   <!-- Navigation -->
   <div class="b-nav">
@@ -82,23 +85,26 @@ These are the files that are generated from `bower install burger`
 ```
 
 ## Browser Compatibility
-* Safari 6.1+
-* IE 10+
-* Firefox 29+
-* Chrome 26+
-* Opera 17+
+
+- Safari 6.1+
+
+- IE 10+
+- Firefox 29+
+- Chrome 26+
+- Opera 17+
 
 ## Contributing to Burger
 
 Pull requests are the way to go.
 
-
 ## Creators
 
 **Matthew Blode**
+
 - <https://twitter.com/mblode>
 - <https://github.com/mblode>
 - <http://codepen.io/mblode>
 
 ## License
+
 MIT © [Matthew Blode](http://mblode.github.io)
