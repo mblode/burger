@@ -75,6 +75,8 @@ function watchFiles() {
 }
 
 // Default Gulp Task
+exports.build = parallel(html, styles, scripts);
+
 exports.default = series(
   parallel(html, styles, scripts),
   parallel(serve, watchFiles)

@@ -1,7 +1,7 @@
 @keyframes slideInLeft {
   0% {
     transform: translate3d(-250px, 0, 0);
-    visibility: visible;
+    opacity: 1;
   }
   100% {
     transform: translate3d(0, 0, 0);
@@ -13,7 +13,7 @@
   }
   100% {
     transform: translate3d(-250px, 0, 0);
-    visibility: hidden;
+    opacity: 0;
   }
 }
 * {
@@ -24,14 +24,12 @@ body:after {
   background: #2196f3;
   content: "";
   height: 110%;
-  visibility: hidden;
   left: 0;
   opacity: 0;
   overflow: hidden;
   padding: 0;
   position: absolute;
   top: 0;
-  visibility: hidden;
   transition: all 0.4s ease;
   width: 100%;
 }
@@ -48,7 +46,8 @@ body.open:after {
   z-index: 11;
 }
 .b-nav:not(.open) {
-  visibility: hidden;
+  opacity: 0;
+  transition: all 0.4s ease;
 }
 .b-nav li {
   color: white;
@@ -66,7 +65,7 @@ body.open:after {
   padding-top: 120px;
 }
 .b-nav.open {
-  visibility: visible;
+  opacity: 1;
 }
 .b-nav.open li {
   animation-duration: 0.4s;

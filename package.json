@@ -4,13 +4,19 @@
   "description": "Burger is a minimal hamburger menu with fullscreen navigation.",
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp"
+    "build": "gulp build",
+    "dev": "gulp",
+    "gulp": "gulp",
+    "test": "npm run build",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "release": "npm run build && changeset publish"
   },
   "repository": "https://github.com/mblode/burger.git",
   "author": "Matthew Blode",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "browser-sync": "^2.29.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^9.0.0",
