@@ -4,7 +4,7 @@ Burger is a minimal hamburger menu with fullscreen navigation. It is created by 
 
 This project officially requires zero external bower dependencies. Woo-hoo!
 
-## [Demo on Codepen](http://codepen.io/mblode/pen/qEGWwB)
+## [Demo](http://blode.co/burger)
 
 ## Screenshots
 
@@ -97,14 +97,10 @@ These are the files that are generated from `bower install burger`
 
 Pull requests are the way to go.
 
-## Creators
-
-**Matthew Blode**
-
-- <https://twitter.com/mblode>
-- <https://github.com/mblode>
-- <http://codepen.io/mblode>
-
 ## License
 
-MIT © [Matthew Blode](http://mblode.github.io)
+MIT
+
+---
+
+Crafted by [<img src="https://matthewblode.com/avatar-circle.png" width="20" align="top" />](https://matthewblode.com) [Matthew Blode](https://matthewblode.com)
