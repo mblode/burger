@@ -55,6 +55,13 @@ function html() {
     .pipe(browserSync.stream());
 }
 
+// Images Task
+function images() {
+  return src('src/img/**/*', { encoding: false })
+    .pipe(dest('dist/img/'))
+    .pipe(browserSync.stream());
+}
+
 // Browser Sync Task
 function serve() {
   browserSync.init({
@@ -69,15 +76,16 @@ function watchFiles() {
   watch('src/sass/**/*.scss', styles);
   watch('src/scripts/**/*.js', scripts);
   watch('src/*.html', html);
+  watch('src/img/**/*', images);
   // Reloads the browser whenever HTML or JS files change
   watch('src/**/*.html').on('change', browserSync.reload);
   watch('src/scripts/**/*.js').on('change', browserSync.reload);
 }
 
 // Default Gulp Task
-exports.build = parallel(html, styles, scripts);
+exports.build = parallel(html, styles, scripts, images);
 
 exports.default = series(
-  parallel(html, styles, scripts),
+  parallel(html, styles, scripts, images),
   parallel(serve, watchFiles)
 );
