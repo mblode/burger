@@ -5,6 +5,7 @@
   "main": "",
   "scripts": {
     "build": "gulp build",
+    "build:site": "rm -rf site && mkdir -p site/burger && cp -R dist/. site/burger/",
     "dev": "gulp",
     "gulp": "gulp",
     "test": "npm run build",
@@ -12,6 +13,7 @@
     "changeset:version": "changeset version",
     "release": "npm run build && changeset publish"
   },
+  "homepage": "https://blode.co/burger",
   "repository": "https://github.com/mblode/burger.git",
   "author": "Matthew Blode",
   "license": "MIT",

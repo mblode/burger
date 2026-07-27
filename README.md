@@ -4,7 +4,7 @@ Burger is a minimal hamburger menu with fullscreen navigation. It is created by 
 
 This project officially requires zero external bower dependencies. Woo-hoo!
 
-## [Demo](http://blode.co/burger)
+## [Demo](https://blode.co/burger)
 
 ## Screenshots
 
@@ -28,14 +28,10 @@ if you have cloned the repo or downloaded from .zip, there are a few steps you m
 4. To run gulp server: `gulp`.
 5. To run build process: `gulp build`.
 
-## Running Github Pages
+## Running the Website
 
-The gh-pages branch is built using Jekyll and must therefore be install with `gem install jekyll`.
-
-1. Checkout in to gh-pages: `git checkout gh-pages`.
-2. Install burger dependency: `bower install`.
-3. Run jekyll: `jekyll serve`.
-4. Open in browser: `localhost:4000/burger/`.
+Run `npm run build && npm run build:site`. The deployable site is written to
+`site/burger/` for hosting at <https://blode.co/burger>.
 
 ## What's Included
 
@@ -97,10 +93,14 @@ These are the files that are generated from `bower install burger`
 
 Pull requests are the way to go.
 
+## Creators
+
+**Matthew Blode**
+
+- <https://twitter.com/mblode>
+- <https://github.com/mblode>
+- <http://codepen.io/mblode>
+
 ## License
 
-MIT
-
----
-
-Crafted by [<img src="https://matthewblode.com/avatar-circle.png" width="20" align="top" />](https://matthewblode.com) [Matthew Blode](https://matthewblode.com)
+MIT © [Matthew Blode](https://blode.co)
