@@ -1,6 +1,8 @@
 node_modules
 bower_components
-dist
+# dist/ is tracked on purpose: it is bower.json's `main` and the source that
+# build:site copies into site/. Ignoring it hides newly generated bundles from
+# git status, so the published package silently drifts from src/.
 site
 .DS_Store
 _sass
