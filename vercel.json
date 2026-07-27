@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build && npm run build:site",
+  "outputDirectory": "site",
+  "rewrites": [
+    {
+      "source": "/burger",
+      "destination": "/burger/index.html"
+    }
+  ]
+}

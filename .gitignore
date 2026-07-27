@@ -1,8 +1,12 @@
 node_modules
 bower_components
+dist
+site
 .DS_Store
 _sass
 _site
 _layouts
 _includes
 .sass-cache
+.vercel
+.env*
