@@ -103,10 +103,16 @@ body:has(.b-menu[aria-expanded="true"]) .b-menu:focus-visible {
 }
 
 .b-brand {
+  /* Same 44px floor as the nav links: this is a link to home, tapped as often as
+   * they are, and it was 28px tall for the same reason they were. The container is
+   * 60px tall and centres its items, so nothing moves. */
+  align-items: center;
   color: var(--burger-accent);
+  display: inline-flex;
   font-family: var(--burger-font-family);
   font-size: var(--burger-font-size);
   font-weight: var(--burger-font-weight);
+  min-block-size: var(--burger-target-size);
   position: relative;
   text-decoration: none;
 }

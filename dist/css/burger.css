@@ -142,7 +142,10 @@
     font-family: var(--burger-font-family);
     font-size: var(--burger-font-size);
     font-weight: var(--burger-font-weight);
+    min-block-size: var(--burger-target-size);
+    align-items: center;
     text-decoration: none;
+    display: inline-flex;
     position: relative;
   }
 

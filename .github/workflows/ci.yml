@@ -49,6 +49,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      # The CSS half of the component — scroll container, inert, forced colors,
+      # reduced motion, closed-nav tab order — needs a real engine. jsdom has
+      # neither :has() nor visibility inheritance.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser tests
+        run: npm run test:browser
+
       - name: Publint
         run: npx publint
 
