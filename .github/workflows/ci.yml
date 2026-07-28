@@ -2,9 +2,12 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
+    branches: ["**"]
   pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 permissions:
   contents: read
@@ -21,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: "lts/*"
           cache: npm
 
       - name: Install
@@ -31,5 +34,24 @@ jobs:
         if: github.event_name == 'pull_request' && github.head_ref != 'changeset-release/master'
         run: npx changeset status --since origin/master
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Format Check
+        run: npm run format:check
+
       - name: Build
-        run: npm test
+        run: npm run build
+
+      - name: Publint
+        run: npx publint
+
+      # dist/ is committed and consumed by CDN users, so a build that produces
+      # different output than what was pushed means someone edited src/ without
+      # rebuilding. Fail here rather than ship a stale bundle.
+      #
+      # Maps are excluded: Lightning CSS resolves @imports concurrently, so the
+      # `sources` order in burger.min.css.map varies between runs even though the
+      # CSS itself is byte-identical. Gating on it would fail at random.
+      - name: Verify dist is up to date
+        run: git diff --exit-code -- dist ':(exclude)dist/**/*.map'

@@ -1,0 +1,58 @@
+/*
+ * The --burger-* theming API. Every value in the other partials references one of
+ * these, so a consumer restyles the component by redeclaring tokens rather than
+ * by out-specifying selectors.
+ *
+ * Declared on :root so overrides can land anywhere, including inline on an
+ * ancestor to theme one instance.
+ */
+:root {
+  /* Palette */
+  --burger-accent: #2196f3;
+  --burger-on-accent: #fff;
+
+  /* The menu button: a square that the radius rounds into a circle */
+  --burger-size: 60px;
+  --burger-radius: 50%;
+  --burger-border-width: 2px;
+  --burger-inset-block-start: 30px;
+  --burger-inset-inline-start: 30px;
+
+  /* The three bars */
+  --burger-bun-inline-size: 25px;
+  --burger-bun-block-size: var(--burger-border-width);
+  --burger-bun-gap: 8px;
+
+  /* Type. system-ui first: the previous default asked for "Helvetica-Neue",
+   * which is not a font name any platform ships, so it always fell through to
+   * Helvetica or Arial. */
+  --burger-font-family:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --burger-font-size: 24px;
+  --burger-font-weight: 300;
+  --burger-text-padding: 30px;
+
+  /* Motion. Consumed only inside prefers-reduced-motion: no-preference. */
+  --burger-duration: 0.4s;
+  --burger-easing: ease;
+
+  /*
+   * Two focus rings, because the toggle changes background. Closed it sits on
+   * the host page, where a white ring is invisible; open it sits on the accent
+   * wash, where an accent ring is. Getting this wrong is silent: the ring is
+   * drawn, it just cannot be seen.
+   */
+  --burger-ring-on-surface: var(--burger-accent);
+  --burger-ring-on-accent: var(--burger-on-accent);
+
+  /*
+   * Derived. Kept as tokens rather than inlined calc() at each use so that
+   * overriding --burger-size or --burger-bun-inline-size recomputes every
+   * dependent value instead of half of them.
+   */
+  --burger-nav-offset-block: calc(
+    var(--burger-inset-block-start) + var(--burger-size) +
+      var(--burger-text-padding)
+  );
+}
