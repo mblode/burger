@@ -63,6 +63,22 @@ in the PR that introduced this section.
   are all `position: fixed`. They were `absolute`, which pins them to the top of
   the document: on a page taller than the window, scrolling down and opening the
   menu painted it off-screen. The demo is one viewport tall, so nothing showed it.
+- **The panel is the scroll container.** `.b-nav` is `inset: 0` with
+  `overflow-y: auto` and `overscroll-behavior: contain`; the page behind stays
+  `overflow: hidden`. Any list taller than the window was otherwise unreachable —
+  the wheel did nothing and focus could not scroll a clipped link into view. Keep
+  the list's top and bottom padding on the `<ul>`, not on `li:first-child`, so it
+  is scrollable content rather than an offset the container knows nothing about.
+  The toggle stays `fixed` and outside the scroller: a close button that can be
+  scrolled away is how a fullscreen menu becomes a trap.
+- **44px touch targets**: `--burger-target-size` is the floor for anything tapped.
+  Links are `inline-flex` with `min-block-size` rather than bare inline boxes,
+  which were 28px tall.
+- **Gate hover behind `(hover: hover) and (pointer: fine)`**, or a tap leaves the
+  link stuck in its hover state until you tap elsewhere.
+- **Two motion durations**: `--burger-duration` (0.4s) for opening, which is
+  occasional and large; `--burger-hover-duration` (0.15s) for hover, which happens
+  constantly and has to feel immediate.
 - **The z-index lives on `.b-container`, not its children.** `position: fixed`
   makes the container a stacking context, so a z-index on `.b-menu` or `.b-brand`
   is confined to it and cannot lift them above the wash. Stack is nav 11,
@@ -71,10 +87,13 @@ in the PR that introduced this section.
   on `*`. A component stylesheet does not restyle its host page.
 - **Hidden means unfocusable**: closed nav is `visibility: hidden`, not just
   `opacity: 0`. Transparent links still take focus and still hit-test.
-- **Never `transition: all`.** Name the properties. `all` includes `visibility`,
-  and transitioning that holds the old `visible` for the duration — which made
-  closed nav links compute to visible inside a hidden parent and become focusable
-  again after any interaction. Name the four properties that actually change.
+- **Never `transition: all`, and never a layout property.** Name the properties,
+  and keep them to `translate`/`rotate`/`opacity`/colour. `all` includes
+  `visibility`, and transitioning that holds the old `visible` for the duration —
+  which made closed nav links compute to visible inside a hidden parent and become
+  focusable again after any interaction. The hover indent is why `li::before` owns
+  the indicator bar: a border on the link cannot stay put while the link's own
+  padding animates, and padding animation is layout work every frame.
 - **`inert` is JavaScript's job**: the open menu covers the page, and CSS cannot
   take what is behind it out of the tab order. `burger.ts` walks up from the
   container and the nav and inerts each ancestor's other children, restoring only

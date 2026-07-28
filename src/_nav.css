@@ -27,8 +27,29 @@
   }
 }
 
+/*
+ * The panel is the scroll container, and it covers the viewport.
+ *
+ * It used to be an auto-height fixed box with `overflow: visible` while the page
+ * behind it was `overflow: hidden`. Any list taller than the window was therefore
+ * unreachable: the wheel did nothing, and focusing a clipped link could not
+ * scroll it into view either. Eight links on a landscape phone was enough to lose
+ * the last two (WCAG 1.4.10).
+ *
+ * `inset: 0` rather than `100dvh`: a fixed element already resolves against the
+ * viewport as the browser chrome comes and goes, which is the thing dvh
+ * approximates.
+ */
 .b-nav {
+  inset: 0;
   opacity: 0;
+  overflow-y: auto;
+  /*
+   * Scroll stays in the menu. Without this, reaching the end of the list chains
+   * the gesture to the document behind the overlay — the page appears to move
+   * under a menu that is supposed to have taken over.
+   */
+  overscroll-behavior: contain;
   /* Fixed, to match the wash it sits on. See the note in _overlay.css. */
   position: fixed;
   visibility: hidden;
@@ -38,18 +59,64 @@
 .b-nav ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  /*
+   * Top padding clears the pinned toggle; bottom padding keeps the last link off
+   * the edge once the list scrolls, plus the home indicator on a notched phone.
+   * On the <ul> rather than on `li:first-child`, so it is part of the scrollable
+   * content instead of an offset the scroll container knows nothing about.
+   */
+  padding-block: var(--burger-nav-offset-block)
+    calc(var(--burger-text-padding) + env(safe-area-inset-bottom));
+  padding-inline: 0;
 }
 
 .b-nav li {
   color: var(--burger-on-accent);
   padding: 10px;
+  position: relative;
   text-align: start;
   translate: -250px 0;
 }
 
-.b-nav li:first-child {
-  padding-block-start: var(--burger-nav-offset-block);
+/*
+ * The current/hovered indicator bar, drawn by the item rather than as a border on
+ * the link. The link slides right on hover while this stays put, and the only way
+ * to move a link's text without moving its own border is to animate the link's
+ * padding — a layout property, recalculated every frame. Owning the bar here lets
+ * the slide be a `translate` instead.
+ *
+ * Positioned where the link's border used to sit: the item's 10px padding plus the
+ * link's inline offset.
+ */
+.b-nav li::before {
+  background: transparent;
+  content: "";
+  inline-size: var(--burger-border-width);
+  inset-block: 10px;
+  inset-inline-start: calc(10px + var(--burger-inset-inline-start));
+  position: absolute;
+}
+
+.b-nav li:has(.b-link--active)::before {
+  background: var(--burger-on-accent);
+}
+
+.b-nav li:has(.b-link--active) .b-link {
+  translate: var(--burger-text-padding) 0;
+}
+
+/*
+ * Hover behind a real pointer. On a touchscreen :hover sticks after a tap, so the
+ * link you just left keeps its indicator until you tap elsewhere.
+ */
+@media (hover: hover) and (pointer: fine) {
+  .b-nav li:has(.b-link:hover)::before {
+    background: var(--burger-on-accent);
+  }
+
+  .b-nav li:has(.b-link:hover) .b-link {
+    translate: var(--burger-text-padding) 0;
+  }
 }
 
 body:has(.b-menu[aria-expanded="true"]) .b-nav {
@@ -62,21 +129,26 @@ body:has(.b-menu[aria-expanded="true"]) .b-nav li {
 }
 
 .b-link {
+  align-items: center;
   background: transparent;
-  border-inline-start: var(--burger-border-width) solid transparent;
   color: var(--burger-on-accent);
+  /*
+   * inline-flex with a floor, not a bare inline box. As an inline <a> the tap
+   * target was 28px tall — the height of the text — against the 44px WCAG 2.5.5
+   * asks for on touch. inline-flex keeps the box shrink-wrapped to the label so
+   * the design does not become full-width rows.
+   */
+  display: inline-flex;
   font-family: var(--burger-font-family);
   font-size: var(--burger-font-size);
   font-weight: var(--burger-font-weight);
-  inline-size: auto;
-  margin-inline-start: var(--burger-inset-inline-start);
+  min-block-size: var(--burger-target-size);
+  /* The border-width term keeps the label exactly where it sat when the bar was
+   * this element's own border-inline-start. */
+  margin-inline-start: calc(
+    var(--burger-inset-inline-start) + var(--burger-border-width)
+  );
   text-decoration: none;
-}
-
-.b-link:hover,
-.b-link--active {
-  border-inline-start-color: var(--burger-on-accent);
-  padding-inline-start: var(--burger-text-padding);
 }
 
 /* Links only ever exist over the accent wash, so they need only the one ring. */
@@ -106,11 +178,17 @@ body:has(.b-menu[aria-expanded="true"]) .b-nav li {
    * is what takes the closed nav out of the tab order, and transitioning it holds
    * the old `visible` for the duration — so after any interaction these links
    * computed to visible inside a hidden parent and became focusable again.
+   *
+   * Both of these are compositor-only. Hover is a high-frequency interaction, so
+   * it runs at the short end of the scale rather than the menu's 0.4s.
    */
+  .b-nav li::before {
+    transition: background-color var(--burger-hover-duration) ease;
+  }
+
   .b-link {
-    transition:
-      border-inline-start-color var(--burger-duration) var(--burger-easing),
-      padding-inline-start var(--burger-duration) var(--burger-easing);
+    transition: translate var(--burger-hover-duration)
+      cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
@@ -124,9 +202,10 @@ body:has(.b-menu[aria-expanded="true"]) .b-nav li {
     color: LinkText;
   }
 
-  .b-link:hover,
-  .b-link--active {
-    border-inline-start-color: LinkText;
+  /* The indicator bar is a background now, and backgrounds are forced. */
+  .b-nav li:has(.b-link:hover)::before,
+  .b-nav li:has(.b-link--active)::before {
+    background: LinkText;
   }
 
   .b-link:focus-visible {

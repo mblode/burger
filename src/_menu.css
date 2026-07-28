@@ -16,9 +16,13 @@
   block-size: var(--burger-size);
   display: flex;
   gap: var(--burger-text-padding);
-  inset-block-start: var(--burger-inset-block-start);
-  inset-inline-start: var(--burger-inset-inline-start);
-  /* Fixed, so the toggle stays reachable on a page taller than the window. */
+  inset-block-start: var(--burger-toggle-inset-block);
+  inset-inline-start: var(--burger-toggle-inset-inline);
+  /*
+   * Fixed, so the toggle stays reachable on a page taller than the window — and
+   * so it stays put while the list scrolls underneath. A close button that can be
+   * scrolled off screen is how a fullscreen menu becomes a trap.
+   */
   position: fixed;
   /*
    * The z-index belongs here, on the container. `position: fixed` makes this a

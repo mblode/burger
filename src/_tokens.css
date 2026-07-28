@@ -33,8 +33,18 @@
   --burger-font-weight: 300;
   --burger-text-padding: 30px;
 
-  /* Motion. Consumed only inside prefers-reduced-motion: no-preference. */
+  /* WCAG 2.5.5 Target Size, the floor for anything tapped rather than clicked. */
+  --burger-target-size: 44px;
+
+  /*
+   * Motion. Consumed only inside prefers-reduced-motion: no-preference.
+   *
+   * Two durations: the menu opening is an occasional, large movement and can take
+   * its time; hovering a link happens constantly and has to feel immediate, so it
+   * runs at the short end of the scale.
+   */
   --burger-duration: 0.4s;
+  --burger-hover-duration: 0.15s;
   --burger-easing: ease;
 
   /*
@@ -51,8 +61,24 @@
    * overriding --burger-size or --burger-bun-inline-size recomputes every
    * dependent value instead of half of them.
    */
+  /*
+   * Where the toggle actually sits. `env()` resolves to 0 unless the host page
+   * sets `viewport-fit=cover`, so `max()` keeps the plain 30px everywhere else
+   * and only grows on a notched device that asked for the full screen. Honouring
+   * it costs nothing and is not ours to opt into on the page's behalf.
+   */
+  --burger-toggle-inset-block: max(
+    var(--burger-inset-block-start),
+    env(safe-area-inset-top)
+  );
+  --burger-toggle-inset-inline: max(
+    var(--burger-inset-inline-start),
+    env(safe-area-inset-left)
+  );
+
+  /* Clears the pinned toggle, so it tracks whatever inset the toggle ended up at. */
   --burger-nav-offset-block: calc(
-    var(--burger-inset-block-start) + var(--burger-size) +
+    var(--burger-toggle-inset-block) + var(--burger-size) +
       var(--burger-text-padding)
   );
 }
