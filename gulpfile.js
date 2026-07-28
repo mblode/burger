@@ -24,6 +24,11 @@ function styles() {
       postcssPresetEnv(/* plugin options */)
     ]))
     .pipe(g.rename({ suffix: '.min' }))
+    // The rename alone was the whole of it: dist/css/burger.min.css shipped as
+    // pretty-printed CSS with a name promising otherwise. gulp-minify-css was
+    // declared but never piped, and had stopped working anyway (it calls
+    // util.isRegExp, removed from Node), so plumber would have swallowed it.
+    .pipe(g.cleanCss())
     .pipe(g.sourcemaps.write('.'))
     .pipe(dest('dist/css/'))
     .pipe(browserSync.stream());
