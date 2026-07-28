@@ -13,21 +13,37 @@ src/
   _overlay.css     burger.overlay — the accent wash, scroll lock, box-sizing scope
   _menu.css        burger.menu    — the toggle button, its three bars, the brand
   _nav.css         burger.nav     — the nav list, links, slide keyframes
-  scripts/burger.js  ESM, auto-inits on import, exports initBurger/initAllBurgers
+  scripts/burger.ts       TypeScript, ESM, auto-inits on import
+  scripts/burger.test.ts  vitest + jsdom, JS contract only (see below)
   index.html       demo page (also the deployed site's source)
   img/             opengraph image
-dist/              BUILD OUTPUT, committed — css/, scripts/, img/, index.html
+dist/              BUILD OUTPUT, committed — css/, scripts/ (js + .d.ts), img/, index.html
 site/              deploy artifact, gitignored, produced by build:site
 ```
 
 ## Commands
 
 ```bash
-npm run build      # src/ -> dist/ (Lightning CSS + esbuild + cp)
-npm run lint       # oxlint
-npm run format     # oxfmt --write .   (scope to changed files)
-npm test           # lint + format:check + build + publint
+npm run build        # src/ -> dist/ (Lightning CSS + esbuild + tsc declarations)
+npm run lint         # oxlint
+npm run format       # oxfmt --write .   (scope to changed files)
+npm run check:types  # tsc --noEmit
+npm run test:unit    # vitest run
+npm test             # lint + format + types + unit + build + publint + attw
 ```
+
+esbuild compiles the TypeScript and `tsc -p tsconfig.build.json` emits only the
+`.d.ts` that `exports.types` points at. Two tsconfigs on purpose: the root one is
+`noEmit` and covers the tests, the build one excludes them.
+
+## Testing
+
+`burger.test.ts` covers the **JavaScript contract only** — toggling, Escape, focus
+return, closing on navigation, `inert`, teardown. jsdom implements neither
+`:has()` nor visibility inheritance, so the CSS half (wash, scroll lock, bar
+rotation, closed-nav unfocusability) cannot be asserted there and the test file
+says so. Verify that half in a real browser; a Playwright script covering it lives
+in the PR that introduced this section.
 
 ## Architecture conventions (enforced, not optional)
 
@@ -39,14 +55,34 @@ npm test           # lint + format:check + build + publint
   lose to any unlayered author CSS, so consumers override Burger for free.
 - **Tokens only**: never hardcode a colour or size, reference a `--burger-*`
   custom property from `_tokens.css`. Values computed from other tokens are
-  themselves tokens (`--burger-bun-offset-block`), so overriding `--burger-size`
+  themselves tokens (`--burger-nav-offset-block`), so overriding `--burger-size`
   recomputes every dependent value rather than half of them.
 - **Logical properties**: `inset-block-start`, `padding-inline`, `inline-size`,
   `text-align: start` — never physical `left`/`right`/`top`/`bottom`/`width`.
+- **Viewport-anchored, not document-anchored**: the wash, the toggle and the nav
+  are all `position: fixed`. They were `absolute`, which pins them to the top of
+  the document: on a page taller than the window, scrolling down and opening the
+  menu painted it off-screen. The demo is one viewport tall, so nothing showed it.
+- **The z-index lives on `.b-container`, not its children.** `position: fixed`
+  makes the container a stacking context, so a z-index on `.b-menu` or `.b-brand`
+  is confined to it and cannot lift them above the wash. Stack is nav 11,
+  container 12, wash 0.
 - **Scoped reset**: `box-sizing` is set on `:where(.b-container *, .b-nav *)`, not
   on `*`. A component stylesheet does not restyle its host page.
 - **Hidden means unfocusable**: closed nav is `visibility: hidden`, not just
   `opacity: 0`. Transparent links still take focus and still hit-test.
+- **Never `transition: all`.** Name the properties. `all` includes `visibility`,
+  and transitioning that holds the old `visible` for the duration — which made
+  closed nav links compute to visible inside a hidden parent and become focusable
+  again after any interaction. Name the four properties that actually change.
+- **`inert` is JavaScript's job**: the open menu covers the page, and CSS cannot
+  take what is behind it out of the tab order. `burger.ts` walks up from the
+  container and the nav and inerts each ancestor's other children, restoring only
+  what it set. Body-children-only would miss a toggle nested in a `<header>`.
+- **Forced colors**: every partial ends with a `@media (forced-colors: active)`
+  block mapping to system colours (`Canvas`, `CanvasText`, `LinkText`,
+  `Highlight`). Never `forced-color-adjust: none` — that overrides a deliberate
+  preference.
 - **Focus**: always `:focus-visible` with `outline-offset: 2px`, never
   `outline: none`. Pick the ring by what the element sits on:
   `--burger-ring-on-surface` over the host page, `--burger-ring-on-accent` over

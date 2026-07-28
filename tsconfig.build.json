@@ -1,0 +1,15 @@
+{
+  // Declarations only. esbuild produces the JavaScript; tsc's job here is the
+  // .d.ts that `exports.types` points at, so importers get the real signatures
+  // instead of `any`.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist/scripts",
+    "rootDir": "./src/scripts"
+  },
+  "include": ["src/scripts/**/*.ts"],
+  "exclude": ["node_modules", "dist", "site", "**/*.test.ts"]
+}

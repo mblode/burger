@@ -18,7 +18,16 @@
   gap: var(--burger-text-padding);
   inset-block-start: var(--burger-inset-block-start);
   inset-inline-start: var(--burger-inset-inline-start);
-  position: absolute;
+  /* Fixed, so the toggle stays reachable on a page taller than the window. */
+  position: fixed;
+  /*
+   * The z-index belongs here, on the container. `position: fixed` makes this a
+   * stacking context, so a z-index on .b-menu or .b-brand is confined to it and
+   * cannot lift them over the wash — which paints later, being a pseudo-element
+   * of body. Back when this was `position: absolute` the children's z-indexes
+   * escaped into the root stacking context and it worked by accident.
+   */
+  z-index: 12;
 }
 
 /*
@@ -47,7 +56,6 @@
   padding: 0;
   position: relative;
   user-select: none;
-  z-index: 12;
 }
 
 .b-menu:hover,
@@ -97,7 +105,6 @@ body:has(.b-menu[aria-expanded="true"]) .b-menu:focus-visible {
   font-weight: var(--burger-font-weight);
   position: relative;
   text-decoration: none;
-  z-index: 13;
 }
 
 .b-brand:focus-visible {
@@ -109,10 +116,53 @@ body:has(.b-menu[aria-expanded="true"]) .b-brand {
   color: var(--burger-on-accent);
 }
 
+/*
+ * Named properties, never `transition: all`. See the note in _nav.css: `all`
+ * sweeps up `visibility` and defeats the tab-order handling, and it also asks the
+ * browser to watch every property when four of them actually change.
+ */
 @media (prefers-reduced-motion: no-preference) {
-  .b-menu,
-  .b-bun,
+  .b-menu {
+    transition: border-color var(--burger-duration) var(--burger-easing);
+  }
+
+  .b-bun {
+    transition:
+      opacity var(--burger-duration) var(--burger-easing),
+      rotate var(--burger-duration) var(--burger-easing),
+      translate var(--burger-duration) var(--burger-easing);
+  }
+
   .b-brand {
-    transition: all var(--burger-duration) var(--burger-easing);
+    transition: color var(--burger-duration) var(--burger-easing);
+  }
+}
+
+/*
+ * Forced-colors: the accent fill and the white-on-accent bars both disappear, so
+ * state the pieces in system colours. One ring colour here, because Highlight is
+ * the ring whichever surface the toggle happens to be sitting on.
+ */
+@media (forced-colors: active) {
+  .b-menu {
+    border-color: CanvasText;
+  }
+
+  .b-bun {
+    background: CanvasText;
+  }
+
+  .b-brand {
+    color: LinkText;
+  }
+
+  body:has(.b-menu[aria-expanded="true"]) .b-brand {
+    color: LinkText;
+  }
+
+  .b-menu:focus-visible,
+  body:has(.b-menu[aria-expanded="true"]) .b-menu:focus-visible,
+  .b-brand:focus-visible {
+    outline-color: Highlight;
   }
 }

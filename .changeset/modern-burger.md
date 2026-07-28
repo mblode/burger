@@ -17,10 +17,21 @@ stylesheet derives the overlay, scroll lock, bar rotation and list animation fro
 it with `:has()`. JavaScript no longer mirrors an `.open` class onto three
 separate elements.
 
-**Sass is gone.** Sources are native CSS in `src/*.css`, bundled by Lightning CSS,
-organised into `@layer burger.tokens, burger.overlay, burger.menu, burger.nav` so
-consumers override Burger without `!important`. Every value is a `--burger-*`
-custom property, derived sizes included, and all layout uses logical properties.
+**Focus is contained while the menu is open.** The overlay is opaque, but every
+link behind it stayed in the tab order, so a keyboard user tabbed out of the menu
+into content they could not see. The rest of the page is now `inert` while the
+menu is open, and only what Burger set is released on close.
+
+**Sass is gone.** Sources are TypeScript and native CSS in `src/`, bundled by
+Lightning CSS and esbuild, organised into
+`@layer burger.tokens, burger.overlay, burger.menu, burger.nav` so consumers
+override Burger without `!important`. Every value is a `--burger-*` custom
+property, derived sizes included, and all layout uses logical properties. The
+package ships generated `.d.ts`, so `initBurger` is typed for importers.
+
+**Forced-colors modes are supported.** Each partial maps to system colours under
+`@media (forced-colors: active)`; previously the white bars, brand and links were
+invisible once the accent wash was discarded.
 
 **Breaking changes**
 
@@ -36,6 +47,21 @@ custom property, derived sizes included, and all layout uses logical properties.
 
 **Fixes**
 
+- **The menu was anchored to the document rather than the viewport.** The wash,
+  the toggle and the navigation were all `position: absolute`, so on any page
+  taller than the window, scrolling down and opening the menu painted it at the
+  top of the document — over nothing the reader was looking at. All three are
+  `position: fixed` now. The demo page is exactly one viewport tall, which is why
+  this went unnoticed.
+- **`transition: all` was defeating the tab-order fix.** `all` includes
+  `visibility`, and transitioning it holds the old `visible` for the duration, so
+  after any interaction the closed nav's links computed to visible inside a hidden
+  parent and became focusable again. Transitions now name their properties.
+- **The published package contained the demo page and its analytics key.** `files`
+  was broad enough to ship `dist/index.html`, which embeds a live PostHog project
+  key, plus two 31 kB demo images — 119 kB unpacked for a 7 kB component. Now 15 kB
+  packed, CSS and scripts only. Anyone who installed 2.x has that key in their
+  `node_modules`.
 - `burger.min.css` was not minified. The build renamed the file and stopped
   there.
 - The closed overlay hit-tested at `opacity: 0`, swallowing clicks anywhere on the

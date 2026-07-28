@@ -15,15 +15,21 @@ body:has(.b-menu[aria-expanded="true"]) {
   overflow: hidden;
 }
 
+/*
+ * Fixed and pinned to the viewport. This was `position: absolute` with a
+ * `block-size: 110%` fudge, which anchors it to the document: scroll a page
+ * taller than the window, open the menu, and the wash paints at the top of the
+ * document instead of over what the reader is looking at. The demo page never
+ * showed it because the demo is exactly one viewport tall. `inset: 0` replaces
+ * the size and offset pair, and the 110% overscroll allowance stops being
+ * needed once the element no longer scrolls.
+ */
 body::after {
   background: var(--burger-accent);
-  block-size: 110%;
   content: "";
-  inline-size: 100%;
-  inset-block-start: 0;
-  inset-inline-start: 0;
+  inset: 0;
   opacity: 0;
-  position: absolute;
+  position: fixed;
   /*
    * Hidden, not merely transparent. An opacity-0 overlay still hit-tests, so
    * the closed menu used to swallow every click on the page beneath it.
@@ -42,5 +48,19 @@ body:has(.b-menu[aria-expanded="true"])::after {
       opacity var(--burger-duration) var(--burger-easing),
       visibility var(--burger-duration) var(--burger-easing);
     transition-behavior: allow-discrete;
+  }
+}
+
+/*
+ * Forced-colors modes discard `background`, so the wash would disappear and the
+ * white bars, brand and links would land on the forced page background. Map to
+ * system colours instead of reaching for `forced-color-adjust: none`, which
+ * overrides a preference someone set deliberately.
+ */
+@media (forced-colors: active) {
+  body::after {
+    background: Canvas;
+    /* Canvas matches the page, so the wash needs an edge to read as a surface. */
+    border-inline-end: 1px solid CanvasText;
   }
 }
