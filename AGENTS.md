@@ -38,12 +38,24 @@ esbuild compiles the TypeScript and `tsc -p tsconfig.build.json` emits only the
 
 ## Testing
 
-`burger.test.ts` covers the **JavaScript contract only** — toggling, Escape, focus
-return, closing on navigation, `inert`, teardown. jsdom implements neither
-`:has()` nor visibility inheritance, so the CSS half (wash, scroll lock, bar
-rotation, closed-nav unfocusability) cannot be asserted there and the test file
-says so. Verify that half in a real browser; a Playwright script covering it lives
-in the PR that introduced this section.
+Two suites, split by what the environment can actually observe.
+
+- `src/scripts/burger.test.ts` — **vitest + jsdom**, the JavaScript contract:
+  toggling, Escape, focus return, closing on navigation, `inert`, teardown.
+- `tests/burger.browser.spec.ts` — **Playwright + Chromium**, everything that comes
+  out of a `:has()` selector, inherited `visibility`, a real scroll container, or a
+  media query: viewport anchoring, the scroll container on short viewports, focus
+  containment, touch targets, forced colors, reduced motion, and that no layout
+  property is transitioned. jsdom implements none of this, so do not try to move
+  these into the unit suite; they will pass vacuously.
+
+`npm test` runs the unit suite. `npm run test:browser` runs the browser suite
+(needs `npx playwright install chromium` once); CI runs both.
+
+When emulating a media feature in the browser suite, use `page.emulateMedia()`
+inside the test rather than `test.use({ reducedMotion })` — the latter lost to the
+project-level `use` in `playwright.config.ts` and the assertion passed against
+un-emulated defaults.
 
 ## Architecture conventions (enforced, not optional)
 

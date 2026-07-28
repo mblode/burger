@@ -23,6 +23,9 @@ Hover is also gated behind `(hover: hover) and (pointer: fine)`, so tapping a li
 on a touchscreen no longer leaves it stuck in a hover state, and it runs at 0.15s
 rather than the menu's 0.4s because hovering is constant and has to feel immediate.
 
+The brand link gets the same 44px floor as the nav links; it was 28px for the same
+reason they were.
+
 Safe-area insets are honoured where the host page opts into `viewport-fit=cover`:
 the toggle and the end of the list keep clear of a notch and the home indicator.
 `env()` resolves to 0 otherwise, so nothing changes on other devices.
