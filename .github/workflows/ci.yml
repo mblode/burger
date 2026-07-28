@@ -40,11 +40,20 @@ jobs:
       - name: Format Check
         run: npm run format:check
 
+      - name: Typecheck
+        run: npm run check:types
+
+      - name: Unit tests
+        run: npm run test:unit
+
       - name: Build
         run: npm run build
 
       - name: Publint
         run: npx publint
+
+      - name: Check exports
+        run: npm run check:exports
 
       # dist/ is committed and consumed by CDN users, so a build that produces
       # different output than what was pushed means someone edited src/ without

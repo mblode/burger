@@ -74,7 +74,10 @@ state the component has, and the stylesheet derives everything else from it.
 
 You get keyboard operation, Escape to close with focus returned to the toggle,
 closing on navigation, a scroll lock while open, and a closed menu that stays out
-of the tab order.
+of the tab order. While the menu is open the rest of the page is `inert`, so Tab
+cycles inside the navigation instead of wandering into content behind the overlay.
+Forced-colors modes are handled, and the whole thing is viewport-anchored, so it
+works the same at the bottom of a long page as at the top.
 
 ## Theming
 
@@ -104,10 +107,13 @@ ask for less motion get the menu with no transitions or slide-in.
 
 ```bash
 npm install
-npm run build      # src/ -> dist/ (Lightning CSS + esbuild)
-npm test           # lint, format check, build, publint
+npm run build      # src/ -> dist/ (Lightning CSS + esbuild + tsc declarations)
+npm test           # lint, format, types, unit tests, build, publint, attw
 npm run build:site # writes site/burger/ for hosting at blode.co/burger
 ```
+
+The source is TypeScript and ships generated declarations, so `initBurger` is
+typed for importers.
 
 `dist/` is committed because CDN and npm consumers load it directly. Rebuild
 after touching anything in `src/`; CI fails if the two disagree. See

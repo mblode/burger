@@ -29,53 +29,67 @@
   },
   "style": "./dist/css/burger.min.css",
   "files": [
-    "dist",
-    "src",
+    "dist/css",
+    "dist/scripts",
+    "src/*.css",
+    "src/scripts/burger.ts",
     "LICENSE.md"
   ],
   "type": "module",
   "sideEffects": [
     "**/*.css",
     "./dist/scripts/*.js",
-    "./src/scripts/*.js"
+    "./src/scripts/*.ts"
   ],
   "main": "./dist/scripts/burger.js",
+  "types": "./dist/scripts/burger.d.ts",
   "exports": {
-    ".": "./dist/scripts/burger.js",
+    ".": {
+      "types": "./dist/scripts/burger.d.ts",
+      "default": "./dist/scripts/burger.js"
+    },
     "./css": "./dist/css/burger.css",
     "./css/min": "./dist/css/burger.min.css",
     "./css/*": "./dist/css/*",
     "./scripts/*": "./dist/scripts/*",
-    "./src/*": "./src/*",
+    "./src/*.css": "./src/*.css",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "npm run build:css && npm run build:css:min && npm run build:js && npm run build:assets",
+    "build": "npm run build:css && npm run build:css:min && npm run build:js && npm run build:types && npm run build:assets",
     "build:css": "lightningcss --bundle --browserslist src/burger.css -o dist/css/burger.css",
     "build:css:min": "cd dist/css && lightningcss --bundle --browserslist --minify --sourcemap ../../src/burger.css -o burger.min.css",
-    "build:js": "esbuild src/scripts/burger.js --format=esm --outfile=dist/scripts/burger.js && esbuild src/scripts/burger.js --format=esm --minify --sourcemap --outfile=dist/scripts/burger.min.js",
+    "build:js": "esbuild src/scripts/burger.ts --format=esm --outfile=dist/scripts/burger.js && esbuild src/scripts/burger.ts --format=esm --minify --sourcemap --outfile=dist/scripts/burger.min.js",
+    "build:types": "tsc -p tsconfig.build.json",
     "build:assets": "mkdir -p dist/img && cp src/index.html dist/index.html && cp -R src/img/. dist/img/",
     "build:site": "rm -rf site && mkdir -p site/burger && cp -R dist/. site/burger/",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
+    "check:types": "tsc --noEmit",
+    "test:unit": "vitest run",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "release": "npm run build && changeset publish",
-    "test": "npm run lint && npm run format:check && npm run build && npx publint",
+    "check:exports": "attw --pack . --entrypoints . --ignore-rules cjs-resolves-to-esm",
+    "test": "npm run lint && npm run format:check && npm run check:types && npm run test:unit && npm run build && npx publint && npm run check:exports",
     "prepare": "lefthook install || true"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@changesets/cli": "^2.31.0",
     "browserslist": "^4.28.6",
     "esbuild": "^0.27.0",
+    "jsdom": "^30.0.0",
     "lefthook": "^2.1.10",
     "lightningcss-cli": "^1.32.0",
     "oxfmt": "^0.58.0",
     "oxlint": "^1.73.0",
     "publint": "^0.3.21",
-    "ultracite": "7.9.3"
+    "typescript": "^7.0.2",
+    "ultracite": "7.9.3",
+    "vitest": "^4.1.10"
   },
   "browserslist": [
     "chrome >= 123",

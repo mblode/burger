@@ -29,7 +29,8 @@
 
 .b-nav {
   opacity: 0;
-  position: absolute;
+  /* Fixed, to match the wash it sits on. See the note in _overlay.css. */
+  position: fixed;
   visibility: hidden;
   z-index: 11;
 }
@@ -100,7 +101,35 @@ body:has(.b-menu[aria-expanded="true"]) .b-nav li {
     animation: b-slide-in var(--burger-duration) both;
   }
 
+  /*
+   * Named properties, never `transition: all`. `all` includes `visibility`, which
+   * is what takes the closed nav out of the tab order, and transitioning it holds
+   * the old `visible` for the duration — so after any interaction these links
+   * computed to visible inside a hidden parent and became focusable again.
+   */
   .b-link {
-    transition: all var(--burger-duration) var(--burger-easing);
+    transition:
+      border-inline-start-color var(--burger-duration) var(--burger-easing),
+      padding-inline-start var(--burger-duration) var(--burger-easing);
+  }
+}
+
+/* Forced-colors: white-on-accent links become invisible once the wash is gone. */
+@media (forced-colors: active) {
+  .b-nav li {
+    color: CanvasText;
+  }
+
+  .b-link {
+    color: LinkText;
+  }
+
+  .b-link:hover,
+  .b-link--active {
+    border-inline-start-color: LinkText;
+  }
+
+  .b-link:focus-visible {
+    outline-color: Highlight;
   }
 }

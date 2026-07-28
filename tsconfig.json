@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    // esbuild strips types without understanding TS-only runtime constructs, so
+    // ban the ones it cannot compile (enums, namespaces, parameter properties)
+    // rather than discover them at build time.
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    // The test imports "./burger.ts" directly, which is what vitest resolves.
+    // Permitted because nothing here emits JavaScript: this config is noEmit and
+    // tsconfig.build.json is emitDeclarationOnly, with esbuild producing the JS.
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts", "*.config.ts"],
+  "exclude": ["node_modules", "dist", "site"]
+}
