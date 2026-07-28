@@ -1,14 +1,8 @@
 node_modules
-bower_components
-# dist/ is tracked on purpose: it is bower.json's `main` and the source that
-# build:site copies into site/. Ignoring it hides newly generated bundles from
-# git status, so the published package silently drifts from src/.
+# dist/ is tracked on purpose: it is what npm and CDN consumers load, and the
+# source that build:site copies into site/. Ignoring it hides newly generated
+# bundles from git status, so the published package silently drifts from src/.
 site
 .DS_Store
-_sass
-_site
-_layouts
-_includes
-.sass-cache
 .vercel
 .env*

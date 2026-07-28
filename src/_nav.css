@@ -1,0 +1,106 @@
+/*
+ * The fullscreen navigation list.
+ *
+ * Closed, it is visibility: hidden rather than only opacity: 0. Transparent
+ * links still take focus, so the closed menu used to put four invisible stops
+ * in the tab order ahead of the page's own content.
+ */
+@keyframes b-slide-in {
+  from {
+    opacity: 1;
+    translate: -250px 0;
+  }
+
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes b-slide-out {
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    opacity: 0;
+    translate: -250px 0;
+  }
+}
+
+.b-nav {
+  opacity: 0;
+  position: absolute;
+  visibility: hidden;
+  z-index: 11;
+}
+
+.b-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.b-nav li {
+  color: var(--burger-on-accent);
+  padding: 10px;
+  text-align: start;
+  translate: -250px 0;
+}
+
+.b-nav li:first-child {
+  padding-block-start: var(--burger-nav-offset-block);
+}
+
+body:has(.b-menu[aria-expanded="true"]) .b-nav {
+  opacity: 1;
+  visibility: visible;
+}
+
+body:has(.b-menu[aria-expanded="true"]) .b-nav li {
+  translate: 0 0;
+}
+
+.b-link {
+  background: transparent;
+  border-inline-start: var(--burger-border-width) solid transparent;
+  color: var(--burger-on-accent);
+  font-family: var(--burger-font-family);
+  font-size: var(--burger-font-size);
+  font-weight: var(--burger-font-weight);
+  inline-size: auto;
+  margin-inline-start: var(--burger-inset-inline-start);
+  text-decoration: none;
+}
+
+.b-link:hover,
+.b-link--active {
+  border-inline-start-color: var(--burger-on-accent);
+  padding-inline-start: var(--burger-text-padding);
+}
+
+/* Links only ever exist over the accent wash, so they need only the one ring. */
+.b-link:focus-visible {
+  outline: 2px solid var(--burger-ring-on-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .b-nav {
+    transition:
+      opacity var(--burger-duration) var(--burger-easing),
+      visibility var(--burger-duration) var(--burger-easing);
+    transition-behavior: allow-discrete;
+  }
+
+  .b-nav li {
+    animation: b-slide-out var(--burger-duration) both;
+  }
+
+  body:has(.b-menu[aria-expanded="true"]) .b-nav li {
+    animation: b-slide-in var(--burger-duration) both;
+  }
+
+  .b-link {
+    transition: all var(--burger-duration) var(--burger-easing);
+  }
+}

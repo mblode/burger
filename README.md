@@ -1,8 +1,7 @@
 # Burger
 
-Burger is a minimal hamburger menu with fullscreen navigation. It is created by mblode.
-
-This project officially requires zero external bower dependencies. Woo-hoo!
+Burger is a minimal hamburger menu with fullscreen navigation. One stylesheet,
+about forty lines of JavaScript, no runtime dependencies.
 
 ## [Demo](https://blode.co/burger)
 
@@ -12,94 +11,123 @@ This project officially requires zero external bower dependencies. Woo-hoo!
 
 ![Burger: Opened](http://i.imgur.com/tI0ZeNw.png)
 
-## Quick Start
+## Quick start
 
-Several quick start options are available:
-
-- Install with npm: `npm install the-burger` (recommended).
-- [Download the latest release](https://github.com/mblode/burger/archive/master.zip).
-- Clone the repo: `git clone https://github.com/mblode/burger.git`.
-
-if you have cloned the repo or downloaded from .zip, there are a few steps you must take within the terminal.
-
-1. Change directory: `cd burger`.
-2. Install node modules: `npm install`.
-3. Install scss-lint Ruby gem: `gem install scss-lint`.
-4. To run gulp server: `gulp`.
-5. To run build process: `gulp build`.
-
-## Running the Website
-
-Run `npm run build && npm run build:site`. The deployable site is written to
-`site/burger/` for hosting at <https://blode.co/burger>.
-
-## What's Included
-
-These are the files that are generated from `bower install burger`
-
-```
-.
-├── README.md
-├── bower.json
-└── dist
-    ├── css
-    │   ├── burger..min.css
-    │   └── burger.min.css.map
-    ├── index.html
-    ├── scripts
-    │   ├── burger.js
-    │   ├── burger.min.js.map
-    │   └── burger.min.js
-    └── sass
-        └── burger.scss
+```bash
+npm install the-burger
 ```
 
-## Documentation
+Or from a CDN:
 
-### HTML Markup
-
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/the-burger@3/dist/css/burger.min.css"
+/>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/the-burger@3/dist/scripts/burger.min.js"
+></script>
 ```
-  <!-- Navigation -->
-  <div class="b-nav">
-    <li><a class="b-link b-link--active" href="#">Home</a></li>
+
+The script is an ES module, so it needs `type="module"`. It wires up every
+`.b-menu` on the page when it loads. To control that yourself:
+
+```js
+import { initBurger } from "the-burger";
+
+const teardown = initBurger(document.querySelector(".b-menu"));
+```
+
+## Markup
+
+The toggle is a `<button>` with `aria-expanded` and `aria-controls`, and the
+navigation is a `<nav>` around a `<ul>`. Both matter: `aria-expanded` is the only
+state the component has, and the stylesheet derives everything else from it.
+
+```html
+<nav class="b-nav" id="b-nav" aria-label="Main">
+  <ul>
+    <li><a class="b-link b-link--active" href="#" aria-current="page">Home</a></li>
     <li><a class="b-link" href="#">About</a></li>
     <li><a class="b-link" href="#">Portfolio</a></li>
     <li><a class="b-link" href="#">Contact</a></li>
-  </div>
+  </ul>
+</nav>
 
-  <!-- Burger-Icon -->
-  <div class="b-container">
-    <div class="b-menu">
-      <div class="b-bun b-bun--top"></div>
-      <div class="b-bun b-bun--mid"></div>
-      <div class="b-bun b-bun--bottom"></div>
-    </div>
+<div class="b-container">
+  <button
+    class="b-menu"
+    type="button"
+    aria-expanded="false"
+    aria-controls="b-nav"
+    aria-label="Open menu"
+  >
+    <span class="b-bun b-bun--top"></span>
+    <span class="b-bun b-bun--mid"></span>
+    <span class="b-bun b-bun--bottom"></span>
+  </button>
 
-    <!-- Burger-Brand -->
-    <a href="#" class="b-brand">Burger</a>
-  </div>
+  <a href="#" class="b-brand">Burger</a>
+</div>
 ```
 
-## Browser Compatibility
+You get keyboard operation, Escape to close with focus returned to the toggle,
+closing on navigation, a scroll lock while open, and a closed menu that stays out
+of the tab order.
 
-- Safari 6.1+
+## Theming
 
-- IE 10+
-- Firefox 29+
-- Chrome 26+
-- Opera 17+
+Every value is a `--burger-*` custom property. Redeclare the ones you want:
 
-## Contributing to Burger
+```css
+:root {
+  --burger-accent: #111;
+  --burger-on-accent: #fff;
+  --burger-size: 48px;
+  --burger-font-family: "Inter", sans-serif;
+  --burger-duration: 0.25s;
+}
+```
 
-Pull requests are the way to go.
+Sizes derive from each other, so overriding `--burger-size` moves the bars, the
+cross, and the navigation offset together.
+
+Burger's rules live in `@layer burger.tokens, burger.overlay, burger.menu,
+burger.nav`. Layered CSS loses to unlayered CSS regardless of specificity, so any
+rule you write in your own stylesheet wins without `!important`.
+
+Motion sits inside `@media (prefers-reduced-motion: no-preference)`; readers who
+ask for less motion get the menu with no transitions or slide-in.
+
+## Development
+
+```bash
+npm install
+npm run build      # src/ -> dist/ (Lightning CSS + esbuild)
+npm test           # lint, format check, build, publint
+npm run build:site # writes site/burger/ for hosting at blode.co/burger
+```
+
+`dist/` is committed because CDN and npm consumers load it directly. Rebuild
+after touching anything in `src/`; CI fails if the two disagree. See
+[AGENTS.md](AGENTS.md) for the architecture conventions.
+
+## Browser support
+
+Burger uses cascade layers, `:has()`, and logical properties. Chrome and Edge
+123+, Firefox 128+, Safari and iOS Safari 17.5+.
+
+## Contributing
+
+Pull requests are the way to go. Add a changeset with `npm run changeset`.
 
 ## Creators
 
 **Matthew Blode**
 
-- <https://twitter.com/mblode>
 - <https://github.com/mblode>
-- <http://codepen.io/mblode>
+- <https://blode.co>
 
 ## License
 

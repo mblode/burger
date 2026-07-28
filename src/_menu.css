@@ -1,0 +1,118 @@
+/*
+ * The toggle itself, its three bars, and the brand that sits beside it.
+ *
+ * .b-menu is a <button>, so this partial also undoes the UA button styling that
+ * a <div> never had. Using a real button is what makes the component reachable
+ * by keyboard and announced as a control.
+ */
+/*
+ * A flex row, so the brand is centred against the button by the layout rather
+ * than by the hand-computed negative offset this used to carry. That offset was
+ * derived from the font size divided by 2.8, which only ever approximated a
+ * centre, and broke outright the moment the button stopped being inline-block.
+ */
+.b-container {
+  align-items: center;
+  block-size: var(--burger-size);
+  display: flex;
+  gap: var(--burger-text-padding);
+  inset-block-start: var(--burger-inset-block-start);
+  inset-inline-start: var(--burger-inset-inline-start);
+  position: absolute;
+}
+
+/*
+ * A flex column rather than the three relatively-offset blocks this used to be.
+ * The old version positioned each bar with a hand-computed `top` inside a padded
+ * box, which a <button> then re-centred out from under, and which had to be
+ * recomputed by hand whenever --burger-size changed. `gap` states the spacing
+ * once and centring is the browser's job.
+ */
+.b-menu {
+  align-items: center;
+  appearance: none;
+  background: var(--burger-accent);
+  block-size: var(--burger-size);
+  border: var(--burger-border-width) solid var(--burger-accent);
+  border-radius: var(--burger-radius);
+  cursor: pointer;
+  /* inline-flex, not flex: the brand sits beside the button on the same line. */
+  display: inline-flex;
+  flex-direction: column;
+  font: inherit;
+  gap: var(--burger-bun-gap);
+  inline-size: var(--burger-size);
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  user-select: none;
+  z-index: 12;
+}
+
+.b-menu:hover,
+.b-menu[aria-expanded="true"] {
+  border-color: var(--burger-on-accent);
+}
+
+.b-menu:focus-visible {
+  outline: 2px solid var(--burger-ring-on-surface);
+  outline-offset: 2px;
+}
+
+body:has(.b-menu[aria-expanded="true"]) .b-menu:focus-visible {
+  outline-color: var(--burger-ring-on-accent);
+}
+
+.b-bun {
+  background: var(--burger-on-accent);
+  block-size: var(--burger-bun-block-size);
+  flex: none;
+  inline-size: var(--burger-bun-inline-size);
+}
+
+/*
+ * Bars fold into a cross: the outer two travel exactly one gap-plus-bar to land
+ * on the middle one, so the X is centred whatever the tokens say. The middle bar
+ * fades rather than moving, leaving two strokes instead of a three-line pile.
+ */
+.b-menu[aria-expanded="true"] .b-bun--top {
+  rotate: 45deg;
+  translate: 0 calc(var(--burger-bun-gap) + var(--burger-bun-block-size));
+}
+
+.b-menu[aria-expanded="true"] .b-bun--mid {
+  opacity: 0;
+}
+
+.b-menu[aria-expanded="true"] .b-bun--bottom {
+  rotate: -45deg;
+  translate: 0 calc((var(--burger-bun-gap) + var(--burger-bun-block-size)) * -1);
+}
+
+.b-brand {
+  color: var(--burger-accent);
+  font-family: var(--burger-font-family);
+  font-size: var(--burger-font-size);
+  font-weight: var(--burger-font-weight);
+  position: relative;
+  text-decoration: none;
+  z-index: 13;
+}
+
+.b-brand:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
+}
+
+body:has(.b-menu[aria-expanded="true"]) .b-brand {
+  color: var(--burger-on-accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .b-menu,
+  .b-bun,
+  .b-brand {
+    transition: all var(--burger-duration) var(--burger-easing);
+  }
+}
