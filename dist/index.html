@@ -6,7 +6,7 @@
     <base href="/burger/" />
     <meta
       name="description"
-      content="Burger is a minimal hamburger menu with fullscreen navigation. No framework, no dependencies — just CSS and a few lines of JavaScript."
+      content="Burger is a minimal hamburger menu with fullscreen navigation. No framework, no dependencies: just CSS and a few lines of JavaScript."
     />
 
     <title>Burger: a minimal hamburger menu</title>
@@ -14,7 +14,7 @@
     <meta property="og:title" content="Burger: a minimal hamburger menu" />
     <meta
       property="og:description"
-      content="Burger is a minimal hamburger menu with fullscreen navigation. No framework, no dependencies — just CSS and a few lines of JavaScript."
+      content="Burger is a minimal hamburger menu with fullscreen navigation. No framework, no dependencies: just CSS and a few lines of JavaScript."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blode.co/burger" />
@@ -38,6 +38,25 @@
         display: inline;
         font-size: inherit;
         margin: 0;
+      }
+
+      /* Clears the pinned toggle via the same token the nav uses, so the copy
+         tracks whatever inset the toggle ended up at rather than guessing. */
+      .b-content {
+        color: #1a1a1a;
+        font-family: var(--burger-font-family);
+        font-size: 17px;
+        line-height: 1.6;
+        margin: 0 auto;
+        max-width: 62ch;
+        padding: var(--burger-nav-offset-block) 30px 60px;
+      }
+
+      .b-content code {
+        background: #f0f0f0;
+        border-radius: 4px;
+        font-size: 15px;
+        padding: 2px 6px;
       }
     </style>
     <link rel="preconnect" href="https://r.blode.co" />
@@ -131,6 +150,48 @@
       <!-- Burger-Brand -->
       <h1 class="b-heading"><a href="#" class="b-brand">Burger</a></h1>
     </div>
+
+    <!-- The demo used to be exactly one viewport tall with no prose on it at
+         all. Real content also exercises the fixed overlay and the scroll lock,
+         which a single-screen demo never could. -->
+    <main class="b-content">
+      <p>
+        Burger is a hamburger menu that opens into a fullscreen navigation. One
+        stylesheet, one small ES module, no framework and nothing at runtime.
+        Press the button in the corner, or tab to it and hit Enter, to see the
+        whole of it.
+      </p>
+
+      <p>
+        The unusual part is how little JavaScript there is. The entire open and
+        closed state is the <code>aria-expanded</code> attribute on the toggle,
+        and the stylesheet derives everything else from it with
+        <code>:has()</code>: the accent wash, the scroll lock, the three bars
+        folding into a cross, the links sliding in. There is nothing to keep in
+        sync, because the state is written in exactly one place, and that place
+        is the attribute a screen reader was going to read anyway.
+      </p>
+
+      <p>
+        The script is there for the one thing CSS cannot do, which is take the
+        rest of the page out of the tab order while the menu covers it. Open the
+        menu and press Tab a few times: focus stays inside. Without that, an
+        overlay hides the page visually while every link behind it stays
+        focusable, so a keyboard user tabs off into content they cannot see.
+        Escape closes the menu and puts focus back on the button, and clicking a
+        link closes it too, so you never arrive at the destination with the
+        overlay still up.
+      </p>
+
+      <p>
+        Restyling is done by redeclaring <code>--burger-*</code> custom
+        properties rather than by out-specifying selectors, and the tokens that
+        derive from each other recompute together: override
+        <code>--burger-size</code> and the nav offset follows it. Install with
+        <code>npm i the-burger</code>, or take the stylesheet from a CDN. The
+        <a href="https://github.com/mblode/burger">source is on GitHub</a>.
+      </p>
+    </main>
 
     <script type="module" src="scripts/burger.min.js"></script>
   </body>
