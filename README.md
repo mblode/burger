@@ -17,6 +17,10 @@ Add a toggle button and a nav list, link the two files, and the menu works.
 
 </div>
 
+<p align="center">
+  <img alt="The fullscreen navigation open over the page" src=".github/assets/screenshot.png" width="800" />
+</p>
+
 ## Demo
 
 Open and close the menu, then try it with the keyboard alone.
