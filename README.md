@@ -27,7 +27,7 @@ Open and close the menu, then try it with the keyboard alone.
 
 <p>
 <a href="https://blode.co/burger">
-<img alt="View demo" src=".github/assets/demo.svg" width="200" />
+<img alt="View the demo" src=".github/assets/demo.svg" width="200" />
 </a>
 </p>
 
