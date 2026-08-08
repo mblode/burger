@@ -61,7 +61,7 @@
     "build:css:min": "cd dist/css && lightningcss --bundle --browserslist --minify --sourcemap ../../src/burger.css -o burger.min.css",
     "build:js": "esbuild src/scripts/burger.ts --format=esm --outfile=dist/scripts/burger.js && esbuild src/scripts/burger.ts --format=esm --minify --sourcemap --outfile=dist/scripts/burger.min.js",
     "build:types": "tsc -p tsconfig.build.json",
-    "build:assets": "mkdir -p dist/img && cp src/index.html dist/index.html && cp -R src/img/. dist/img/",
+    "build:assets": "mkdir -p dist/img dist/fonts && cp src/index.html dist/index.html && cp -R src/img/. dist/img/ && cp -R src/fonts/. dist/fonts/",
     "build:site": "rm -rf site && mkdir -p site/burger && cp -R dist/. site/burger/",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
