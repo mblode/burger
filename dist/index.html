@@ -87,36 +87,131 @@
         margin: 0;
       }
 
-      /* Clears the pinned toggle via the same token the nav uses, so the copy
-         tracks whatever inset the toggle ended up at rather than guessing. */
+      /*
+       * The menu is the page, so there is one line of copy and the credit sits
+       * at the foot of the window rather than partway up it. The toggle, the nav
+       * and the wash are all `position: fixed` and therefore out of flow, which
+       * leaves <main> and <footer> as the only two items in this column.
+       */
+      body {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        min-block-size: 100dvh;
+      }
+
+      /*
+       * `align-content` centres the line in whatever space the footer leaves,
+       * with no wrapper element to do it. The block-start padding still clears
+       * the pinned toggle via the same token the nav uses, so on a viewport too
+       * short to centre anything the copy lands below the button rather than
+       * under it.
+       */
       .b-content {
+        align-content: center;
         color: #1a1a1a;
+        flex: 1;
         font-family: var(--burger-font-family);
         font-size: 17px;
         line-height: 1.6;
-        margin: 0 auto;
-        max-width: 62ch;
-        padding: var(--burger-nav-offset-block) 30px 60px;
+        margin-inline: auto;
+        max-inline-size: 46ch;
+        padding-block: var(--burger-nav-offset-block) 30px;
+        padding-inline: 30px;
+        text-align: center;
+        text-wrap: pretty;
       }
 
       /* The only site-level credit block, so it carries the contentinfo
          landmark this page had none of. */
       .b-footer {
-        color: #1a1a1a;
+        align-items: center;
+        /* A muted colour rather than `opacity`, which would fade the avatar
+           along with the text it sits next to. */
+        color: #525252;
+        display: flex;
+        flex-direction: column;
         font-family: var(--burger-font-family);
         font-size: 15px;
-        margin: 0 auto;
-        max-width: 62ch;
-        opacity: 0.7;
-        padding: 0 30px 60px;
+        padding-block-end: 30px;
+        padding-inline: 30px;
+        text-align: center;
       }
 
-      .b-content code {
-        background: #f0f0f0;
-        border-radius: 4px;
-        font-family: "Glide Mono", ui-monospace, monospace;
-        font-size: 15px;
-        padding: 2px 6px;
+      .b-content p,
+      .b-footer p {
+        margin: 0;
+      }
+
+      .b-credit,
+      .b-elsewhere {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .b-credit {
+        gap: 4px;
+      }
+
+      .b-elsewhere {
+        gap: 12px;
+      }
+
+      /*
+       * 44px, the same WCAG 2.5.5 floor `--burger-target-size` sets for the
+       * menu. As bare inline boxes these were the height of their text.
+       */
+      .b-footer a {
+        align-items: center;
+        color: inherit;
+        display: inline-flex;
+        gap: 8px;
+        min-block-size: var(--burger-target-size);
+        text-decoration: none;
+      }
+
+      .b-author {
+        border-radius: 999px;
+        padding-inline: 6px 10px;
+      }
+
+      .b-avatar {
+        border-radius: 50%;
+        outline: 1px solid rgb(0 0 0 / 0.05);
+        outline-offset: -1px;
+      }
+
+      .b-sep {
+        color: #c9c9c9;
+      }
+
+      .b-footer a:focus-visible {
+        outline: 2px solid var(--burger-ring-on-surface);
+        outline-offset: 2px;
+      }
+
+      /* Gated, or a tap leaves the link stuck in its hover state until you tap
+         somewhere else. */
+      @media (hover: hover) and (pointer: fine) {
+        .b-footer a:hover {
+          color: #1a1a1a;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .b-footer a {
+          transition: color var(--burger-hover-duration) var(--burger-easing);
+        }
+      }
+
+      /* The separators are carried by colour alone, so they vanish into the
+         forced background unless they are mapped to a system colour. */
+      @media (forced-colors: active) {
+        .b-sep {
+          color: CanvasText;
+        }
       }
     </style>
     <link rel="preconnect" href="https://r.blode.co" />
@@ -211,29 +306,13 @@
       <h1 class="b-heading"><a href="#" class="b-brand">Burger</a></h1>
     </div>
 
-    <!-- The demo used to be exactly one viewport tall with no prose on it at
-         all. Real content also exercises the fixed overlay and the scroll lock,
-         which a single-screen demo never could. -->
+    <!-- The demo is the menu. Everything the prose here used to explain is in
+         the README, which is where someone deciding whether to install it is
+         reading anyway. -->
     <main class="b-content">
       <p>
-        A fullscreen hamburger navigation menu in one stylesheet and one ES
-        module, no dependencies. Press the button in the corner, or tab to it
-        and hit Enter.
-      </p>
-
-      <p>
-        <code>aria-expanded</code> on the toggle is the only state there is, and
-        the stylesheet derives the rest from it with <code>:has()</code>. The
-        script does the one thing CSS cannot: the rest of the page goes
-        <code>inert</code> while the menu is open, so Tab stays inside it.
-        Escape closes and returns focus to the button.
-      </p>
-
-      <p>
-        Theming is redeclaring <code>--burger-*</code> custom properties.
-        Install with <code>npm install the-burger</code>, or load both files
-        from a CDN. The
-        <a href="https://github.com/mblode/burger">source is on GitHub</a>.
+        A minimal hamburger menu with fullscreen navigation. One stylesheet, one
+        ES module, no dependencies.
       </p>
     </main>
 
@@ -246,15 +325,36 @@
       blode-co/apps/web/.claude/knowledge/zone-conventions.md.
     -->
     <footer class="b-footer">
-      <p>
+      <p class="b-credit">
         Crafted by
-        <a href="https://blode.co" rel="author">Matthew Blode</a> &middot;
-        <a href="https://blode.co/projects">All projects</a> &middot;
+        <a class="b-author" href="https://blode.co" rel="author">
+          <!-- Decorative: the link text names them, so alt text here would only
+               make a screen reader say "Matthew Blode" twice. -->
+          <img
+            alt=""
+            class="b-avatar"
+            height="20"
+            src="img/avatar-sm.png"
+            width="20"
+          />
+          Matthew Blode
+        </a>
+      </p>
+      <p class="b-elsewhere">
+        <a href="https://blode.co/projects">All projects</a>
+        <span class="b-sep" aria-hidden="true">&middot;</span>
         <a
           href="https://github.com/mblode/burger"
           rel="noopener noreferrer"
           target="_blank"
           >GitHub</a
+        >
+        <span class="b-sep" aria-hidden="true">&middot;</span>
+        <a
+          href="https://www.npmjs.com/package/the-burger"
+          rel="noopener noreferrer"
+          target="_blank"
+          >npm</a
         >
       </p>
     </footer>
