@@ -30,8 +30,55 @@
       content="Burger: a minimal hamburger menu with fullscreen navigation"
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="img/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="img/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
     <link rel="stylesheet" href="css/burger.min.css" />
     <style>
+      /*
+       * Glide 2.0.0 (https://github.com/mblode/glide), on this demo page only.
+       * Deliberately not in src/burger.css: the published stylesheet is
+       * installed into other people's sites, and bundling a webfont would push
+       * 200KB and a typeface nobody asked for onto every one of them.
+       *
+       * Relative URLs because <base href="/burger/"> is set above, the same way
+       * the stylesheet and images are linked.
+       */
+      @font-face {
+        font-family: "Glide";
+        src: url("fonts/glide-variable.woff2") format("woff2-variations");
+        font-weight: 100 950;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Glide";
+        src: url("fonts/glide-variable-italic.woff2") format("woff2-variations");
+        font-weight: 100 950;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Glide Mono";
+        src: url("fonts/glide-mono.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      /*
+       * Retheming through the token rather than by out-specifying selectors,
+       * which is how a consumer is meant to restyle Burger. It reaches the menu
+       * and the nav as well as the page copy, so the demo is also a working
+       * demonstration of the theming API.
+       */
+      :root {
+        --burger-font-family:
+          "Glide", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+
       /* The brand doubles as this page's heading, so keep the h1 out of the
        inline flow that positions it beside the menu. */
       .b-heading {
@@ -52,9 +99,22 @@
         padding: var(--burger-nav-offset-block) 30px 60px;
       }
 
+      /* The only site-level credit block, so it carries the contentinfo
+         landmark this page had none of. */
+      .b-footer {
+        color: #1a1a1a;
+        font-family: var(--burger-font-family);
+        font-size: 15px;
+        margin: 0 auto;
+        max-width: 62ch;
+        opacity: 0.7;
+        padding: 0 30px 60px;
+      }
+
       .b-content code {
         background: #f0f0f0;
         border-radius: 4px;
+        font-family: "Glide Mono", ui-monospace, monospace;
         font-size: 15px;
         padding: 2px 6px;
       }
@@ -176,6 +236,28 @@
         <a href="https://github.com/mblode/burger">source is on GitHub</a>.
       </p>
     </main>
+
+    <!--
+      blode.co and blode.co/projects are this same origin behind a rewrite, so
+      both are internal links: same tab, and no rel="noopener noreferrer", which
+      only means something cross-origin. This zone had no link home at all: only
+      a canonical tag, so a reader who landed here had no way back and a crawler
+      had no path out. See
+      blode-co/apps/web/.claude/knowledge/zone-conventions.md.
+    -->
+    <footer class="b-footer">
+      <p>
+        Crafted by
+        <a href="https://blode.co" rel="author">Matthew Blode</a> &middot;
+        <a href="https://blode.co/projects">All projects</a> &middot;
+        <a
+          href="https://github.com/mblode/burger"
+          rel="noopener noreferrer"
+          target="_blank"
+          >GitHub</a
+        >
+      </p>
+    </footer>
 
     <script type="module" src="scripts/burger.min.js"></script>
   </body>
