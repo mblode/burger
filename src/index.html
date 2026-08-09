@@ -18,7 +18,9 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blode.co/burger" />
-    <meta property="og:site_name" content="Burger" />
+    <!-- Every blode.co path shares one site name. The product is already in
+         og:title, so this slot says who made it. -->
+    <meta property="og:site_name" content="Matthew Blode" />
     <meta
       property="og:image"
       content="https://blode.co/burger/img/opengraph-image.png"
@@ -30,6 +32,61 @@
       content="Burger: a minimal hamburger menu with fullscreen navigation"
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@mattblode" />
+    <meta name="twitter:creator" content="@mattblode" />
+    <meta name="author" content="Matthew Blode" />
+    <!--
+      One script, one @graph. Identity is referenced by @id only: blode.co owns
+      the bodies of #person, #website and #organization, and minting a second
+      one here would publish a second human on the same domain.
+
+      Bare WebPage, not SoftwareApplication: a software rich result also needs
+      offers plus a rating, and Google's guidelines forbid the author writing
+      their own. See blode-co/apps/web/.claude/knowledge/zone-conventions.md.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blode.co/burger/#webpage",
+            "url": "https://blode.co/burger",
+            "name": "Burger",
+            "description": "A minimal hamburger menu with fullscreen navigation. One stylesheet, one ES module, no dependencies.",
+            "inLanguage": "en",
+            "isPartOf": { "@id": "https://blode.co/#website" },
+            "breadcrumb": { "@id": "https://blode.co/burger/#breadcrumb" },
+            "author": { "@id": "https://blode.co/#person" },
+            "publisher": { "@id": "https://blode.co/#organization" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://blode.co/burger/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Matthew Blode",
+                "item": "https://blode.co/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Projects",
+                "item": "https://blode.co/projects"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Burger",
+                "item": "https://blode.co/burger"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
     <link rel="icon" href="img/icon.svg" type="image/svg+xml" />
     <link rel="icon" href="img/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
@@ -141,6 +198,54 @@
       .b-content p,
       .b-footer p {
         margin: 0;
+      }
+
+      /*
+       * The trail back to the hub. blode.co/burger is blode.co behind a
+       * rewrite, so these are internal links: same tab, no rel. The text has to
+       * match the BreadcrumbList in <head> word for word, because Google reads
+       * a mismatch between the two as a markup error.
+       */
+      .b-trail {
+        font-size: 13px;
+        margin-block-end: 20px;
+      }
+
+      .b-trail ol {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .b-trail a {
+        color: #525252;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      .b-trail [aria-current="page"] {
+        color: #1a1a1a;
+      }
+
+      .b-trail .b-sep {
+        user-select: none;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .b-trail a:hover {
+          color: #1a1a1a;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .b-trail a {
+          transition: color var(--burger-hover-duration) var(--burger-easing);
+        }
       }
 
       .b-credit,
@@ -310,6 +415,21 @@
          the README, which is where someone deciding whether to install it is
          reading anyway. -->
     <main class="b-content">
+      <nav class="b-trail" aria-label="Breadcrumb">
+        <ol>
+          <li>
+            <!-- rel="author" marks the identity edge, matching the footer
+                 credit. Only this crumb carries it; /projects is a collection. -->
+            <a href="https://blode.co" rel="author">Matthew Blode</a>
+          </li>
+          <li class="b-sep" aria-hidden="true">&rsaquo;</li>
+          <li><a href="https://blode.co/projects">Projects</a></li>
+          <li class="b-sep" aria-hidden="true">&rsaquo;</li>
+          <!-- The current page is not a link, and says so. -->
+          <li aria-current="page">Burger</li>
+        </ol>
+      </nav>
+
       <p>
         A minimal hamburger menu with fullscreen navigation. One stylesheet, one
         ES module, no dependencies.
