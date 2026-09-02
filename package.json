@@ -80,11 +80,11 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^3.0.1",
     "@playwright/test": "^1.62.0",
     "@types/node": "^26.1.2",
     "browserslist": "^4.28.6",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.2",
     "jsdom": "^30.0.0",
     "lefthook": "^2.1.10",
     "lightningcss-cli": "^1.32.0",
